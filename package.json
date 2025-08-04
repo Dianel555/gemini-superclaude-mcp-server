@@ -1,0 +1,49 @@
+{
+  "name": "gemini-superclaude-mcp-server",
+  "version": "2.0.0",
+  "description": "Gemini MCP server for SuperClaude Framework v3+ - Intelligent command routing and persona management for Gemini CLI",
+  "type": "module",
+  "main": "superclaude-server.js",
+  "bin": {
+    "superclaude-mcp": "./superclaude-server.js"
+  },
+  "scripts": {
+    "start": "node superclaude-server.js",
+    "dev": "node --watch superclaude-server.js",
+    "test": "node test-server.js",
+    "validate": "node validate-config.js"
+  },
+  "keywords": [
+    "mcp",
+    "superclaude",
+    "gemini-cli",
+    "ai-orchestration",
+    "persona-switching",
+    "intelligent-routing",
+    "claude-framework"
+  ],
+  "author": "dianel",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.15.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dianel555/gemini-superclaude-mcp-server"
+  },
+  "config": {
+    "superclaude": {
+      "framework_version": "v3+",
+      "core_features": [
+        "intelligent-routing",
+        "persona-management", 
+        "command-orchestration",
+        "mcp-integration"
+      ]
+    }
+  }
+}

@@ -1,0 +1,62 @@
+# Git忽略文件 - Gemini SuperClaude MCP Server
+
+# 依赖目录
+/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# SuperClaude和Claude Code配置目录
+/.claude/
+
+# 日志文件
+*.log
+logs/
+
+# 运行时文件
+*.pid
+*.seed
+*.pid.lock
+
+# 开发环境配置
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+settings.local.json
+
+# 测试覆盖率报告
+coverage/
+.nyc_output/
+
+# 构建输出
+dist/
+build/
+temp/
+tmp/
+
+# 编辑器配置
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 系统文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 项目特定忽略文件
+claude-gemini-superclaude.md
+
+# 备份文件
+*.bak
+*.orig
+*.tmp

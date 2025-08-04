@@ -1,0 +1,69 @@
+# NPM发布忽略文件 - Gemini SuperClaude MCP Server
+
+# 开发和测试文件
+test-server.js
+validate-config.js
+*.test.js
+*.spec.js
+coverage/
+
+# 文档和说明（保留README.md和gemini-superclaude.md用于npm展示）  
+claude-gemini-superclaude.md
+CONTRIBUTING.md
+CHANGELOG.md
+.github/
+
+# 开发配置
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 构建和缓存
+.nyc_output/
+.cache/
+dist/
+build/
+temp/
+tmp/
+
+# 日志文件
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# 依赖锁定文件（让用户自行解析）
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# 环境和配置
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+settings.local.json
+
+# 系统文件
+.DS_Store
+Thumbs.db
+*.pid
+*.seed
+*.pid.lock
+
+# Git相关
+.git/
+.gitignore
+.gitattributes
+
+# 编辑器临时文件
+*.tmp
+*.bak
+*.orig
+
+# SuperClaude特定文件
+.claude/
