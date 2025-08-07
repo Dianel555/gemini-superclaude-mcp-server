@@ -113,7 +113,7 @@ class MCPServerTester {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
             return serverContent.includes('personaRouting:') &&
                    serverContent.includes('ui|component|frontend') &&
-                   serverContent.includes('api|backend|database');
+                   serverContent.includes('api|backend|server|database');
         });
 
         console.log();

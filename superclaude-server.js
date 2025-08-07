@@ -11,7 +11,7 @@ import path from 'path';
 import os from 'os';
 
 /**
- * Gemini SuperClaude MCP Server v2.0
+ * Gemini SuperClaude MCP Server v1.0.1
  * 
  * Features:
  * - Intelligent command routing with context awareness
@@ -22,7 +22,7 @@ import os from 'os';
  */
 
 const CLAUDE_CONFIG_DIR = process.env.CLAUDE_CONFIG_DIR || path.join(os.homedir(), '.claude');
-const SERVER_VERSION = '2.0.0';
+const SERVER_VERSION = '1.0.1';
 
 class GeminiSuperClaudeMCPServer {
     constructor() {
@@ -178,6 +178,118 @@ class GeminiSuperClaudeMCPServer {
                 personas: ['architect'],
                 mcpRequired: ['sequential'],
                 complexity: 'high'
+            },
+
+            // 📚 Knowledge Commands
+            'sc:explain': {
+                category: 'knowledge',
+                description: 'Educational explanations with detailed context',
+                flags: ['--simple', '--detailed', '--visual', '--examples'],
+                personas: ['mentor', 'scribe'],
+                mcpRequired: ['context7', 'sequential'],
+                complexity: 'moderate',
+                autoFlags: {
+                    beginner: ['--simple', '--examples'],
+                    detailed: ['--detailed', '--visual'],
+                    documentation: ['--examples', '--visual']
+                }
+            },
+            'sc:document': {
+                category: 'knowledge',
+                description: 'Comprehensive documentation generation',
+                flags: ['--api', '--user', '--technical', '--readme'],
+                personas: ['scribe', 'mentor'],
+                mcpRequired: ['context7', 'sequential'],
+                complexity: 'moderate',
+                autoFlags: {
+                    api: ['--api', '--technical'],
+                    user: ['--user', '--readme'],
+                    comprehensive: ['--technical', '--examples']
+                }
+            },
+
+            // 🔧 Maintenance Commands  
+            'sc:cleanup': {
+                category: 'maintenance',
+                description: 'Project cleanup and technical debt reduction',
+                flags: ['--unused', '--duplicates', '--formatting', '--optimize'],
+                personas: ['refactorer'],
+                mcpRequired: ['sequential'],
+                complexity: 'moderate',
+                autoFlags: {
+                    debt: ['--unused', '--duplicates'],
+                    format: ['--formatting', '--optimize'],
+                    comprehensive: ['--unused', '--duplicates', '--formatting']
+                }
+            },
+            'sc:git': {
+                category: 'maintenance',
+                description: 'Git workflow assistant with intelligent operations',
+                flags: ['--checkpoint', '--restore', '--analyze', '--optimize'],
+                personas: ['devops', 'scribe'],
+                mcpRequired: ['sequential'],
+                complexity: 'moderate',
+                autoFlags: {
+                    workflow: ['--checkpoint', '--analyze'],
+                    backup: ['--checkpoint', '--restore'],
+                    optimize: ['--analyze', '--optimize']
+                }
+            },
+
+            // 📊 Planning Commands
+            'sc:estimate': {
+                category: 'planning',
+                description: 'Evidence-based project estimation',
+                flags: ['--detailed', '--summary', '--breakdown', '--risks'],
+                personas: ['analyzer', 'architect'],
+                mcpRequired: ['sequential', 'context7'],
+                complexity: 'high',
+                autoFlags: {
+                    quick: ['--summary'],
+                    comprehensive: ['--detailed', '--breakdown', '--risks'],
+                    analysis: ['--breakdown', '--risks']
+                }
+            },
+            'sc:design': {
+                category: 'planning',
+                description: 'System design and architecture orchestration',
+                flags: ['--patterns', '--architecture', '--api', '--database'],
+                personas: ['architect', 'frontend'],
+                mcpRequired: ['magic', 'sequential', 'context7'],
+                complexity: 'high',
+                autoFlags: {
+                    system: ['--architecture', '--patterns'],
+                    api: ['--api', '--patterns'],
+                    ui: ['--patterns', '--database']
+                }
+            },
+
+            // 🔍 Meta Commands
+            'sc:index': {
+                category: 'meta',
+                description: 'Command catalog browsing and discovery',
+                flags: ['--search', '--category', '--help', '--examples'],
+                personas: ['mentor', 'analyzer'],
+                mcpRequired: ['sequential'],
+                complexity: 'low',
+                autoFlags: {
+                    search: ['--search', '--examples'],
+                    browse: ['--category', '--help'],
+                    help: ['--help', '--examples']
+                }
+            },
+            'sc:load': {
+                category: 'meta',
+                description: 'Project context loading and configuration',
+                flags: ['--persona', '--config', '--template', '--workflow'],
+                personas: ['analyzer', 'architect', 'scribe'],
+                mcpRequired: ['sequential'],
+                complexity: 'moderate',
+                autoFlags: {
+                    project: ['--config', '--workflow'],
+                    template: ['--template', '--persona'],
+                    setup: ['--persona', '--config', '--workflow']
+                }
             }
         };
 
@@ -266,6 +378,96 @@ class GeminiSuperClaudeMCPServer {
                     focus: 'security-first',
                     riskTolerance: 'paranoid'
                 }
+            },
+            mentor: {
+                identity: 'Knowledge transfer specialist | Educator | Documentation advocate',
+                coreBeliefs: ['Understanding over completion', 'Teaching through methodology'],
+                primaryQuestion: 'How can I help you understand and learn?',
+                mcpPreferences: ['context7', 'sequential'],
+                thinkingMode: 'educational',
+                autoTriggers: ['learn', 'explain', 'understand', 'guide', 'teach'],
+                commandSpecialization: ['sc:explain', 'sc:document', 'sc:index'],
+                tokenOptimization: 'clarity-focused',
+                behaviorModifiers: {
+                    verbosity: 'comprehensive',
+                    focus: 'understanding',
+                    riskTolerance: 'conservative'
+                }
+            },
+            refactorer: {
+                identity: 'Code quality specialist | Technical debt manager | Clean code advocate',
+                coreBeliefs: ['Simplicity over complexity', 'Maintainability is paramount'],
+                primaryQuestion: 'How can this be simpler and cleaner?',
+                mcpPreferences: ['sequential'],
+                thinkingMode: 'quality-focused',
+                autoTriggers: ['refactor', 'cleanup', 'simplify', 'technical debt', 'improve quality'],
+                commandSpecialization: ['sc:improve', 'sc:cleanup'],
+                tokenOptimization: 'efficiency-focused',
+                behaviorModifiers: {
+                    verbosity: 'practical',
+                    focus: 'code-quality',
+                    riskTolerance: 'moderate'
+                }
+            },
+            performance: {
+                identity: 'Optimization specialist | Bottleneck elimination expert | Metrics-driven analyst',
+                coreBeliefs: ['Measure first, optimize second', 'User experience drives performance'],
+                primaryQuestion: 'Where are the bottlenecks and how do we measure improvement?',
+                mcpPreferences: ['playwright', 'sequential'],
+                thinkingMode: 'metrics-driven',
+                autoTriggers: ['optimize', 'performance', 'speed', 'bottleneck', 'latency'],
+                commandSpecialization: ['sc:analyze', 'sc:improve', 'sc:test'],
+                tokenOptimization: 'data-focused',
+                behaviorModifiers: {
+                    verbosity: 'evidence-based',
+                    focus: 'performance',
+                    riskTolerance: 'data-driven'
+                }
+            },
+            qa: {
+                identity: 'Quality advocate | Testing specialist | Edge case detective',
+                coreBeliefs: ['Prevention over correction', 'Comprehensive coverage is essential'],
+                primaryQuestion: 'What could go wrong and how do we prevent it?',
+                mcpPreferences: ['playwright', 'sequential'],
+                thinkingMode: 'prevention-focused',
+                autoTriggers: ['test', 'quality', 'validation', 'edge case', 'coverage'],
+                commandSpecialization: ['sc:test', 'sc:troubleshoot', 'sc:analyze'],
+                tokenOptimization: 'thorough',
+                behaviorModifiers: {
+                    verbosity: 'comprehensive',
+                    focus: 'quality-assurance',
+                    riskTolerance: 'paranoid'
+                }
+            },
+            devops: {
+                identity: 'Infrastructure specialist | Deployment expert | Reliability engineer',
+                coreBeliefs: ['Automation over manual processes', 'Observability by default'],
+                primaryQuestion: 'How do we deploy and monitor this reliably?',
+                mcpPreferences: ['sequential', 'context7'],
+                thinkingMode: 'operations-focused',
+                autoTriggers: ['deploy', 'infrastructure', 'automation', 'ci/cd', 'monitoring'],
+                commandSpecialization: ['sc:git', 'sc:workflow', 'sc:task'],
+                tokenOptimization: 'efficiency-focused',
+                behaviorModifiers: {
+                    verbosity: 'practical',
+                    focus: 'operational-excellence',
+                    riskTolerance: 'conservative'
+                }
+            },
+            scribe: {
+                identity: 'Professional writer | Documentation specialist | Communication expert',
+                coreBeliefs: ['Clarity over brevity', 'Audience-first communication'],
+                primaryQuestion: 'How can I communicate this most effectively?',
+                mcpPreferences: ['context7', 'sequential'],
+                thinkingMode: 'communication-focused',
+                autoTriggers: ['document', 'write', 'explain', 'guide', 'communication'],
+                commandSpecialization: ['sc:document', 'sc:explain', 'sc:git'],
+                tokenOptimization: 'clarity-focused',
+                behaviorModifiers: {
+                    verbosity: 'detailed',
+                    focus: 'communication',
+                    riskTolerance: 'conservative'
+                }
             }
         };
 
@@ -283,7 +485,13 @@ class GeminiSuperClaudeMCPServer {
                 'api|backend|server|database': 'backend', 
                 'architecture|design|system|scalability': 'architect',
                 'debug|troubleshoot|error|investigate': 'analyzer',
-                'security|vulnerability|auth|compliance': 'security'
+                'security|vulnerability|auth|compliance': 'security',
+                'learn|explain|understand|guide|teach': 'mentor',
+                'refactor|cleanup|simplify|technical debt|improve quality': 'refactorer',
+                'optimize|performance|speed|bottleneck|latency': 'performance',
+                'test|quality|validation|edge case|coverage': 'qa',
+                'deploy|infrastructure|automation|ci/cd|monitoring': 'devops',
+                'document|write|guide|communication': 'scribe'
             },
             
             // Automatic flag inference
@@ -646,6 +854,32 @@ class GeminiSuperClaudeMCPServer {
             'sc:analyze': `1. Scan codebase for complexity and patterns\n2. Apply multi-dimensional analysis framework\n3. Generate insights using ${context.detectedPersona || 'analyzer'} perspective\n4. Provide evidence-based recommendations\n5. Create improvement roadmap`,
             
             'sc:workflow': `1. Define workflow stages and dependencies\n2. Configure orchestration strategy\n3. Set up checkpoints and validation gates\n4. Enable parallel execution where possible\n5. Monitor and optimize workflow performance`,
+
+            'sc:troubleshoot': `1. Gather system state and error information\n2. Apply systematic diagnostic methodology\n3. Identify root causes using evidence\n4. Develop targeted resolution strategy\n5. Validate fixes and prevent recurrence`,
+
+            'sc:improve': `1. Assess current quality and performance metrics\n2. Identify improvement opportunities\n3. Apply ${context.detectedPersona || 'refactorer'} methodology\n4. Implement changes with validation\n5. Measure and document improvements`,
+
+            'sc:test': `1. Define testing strategy and scope\n2. Set up testing environment and tools\n3. Create comprehensive test suites\n4. Execute tests with coverage analysis\n5. Generate quality reports and recommendations`,
+
+            'sc:task': `1. Define task scope and requirements\n2. Break down into manageable components\n3. Set up tracking and milestones\n4. Coordinate resources and dependencies\n5. Monitor progress and adjust as needed`,
+
+            'sc:spawn': `1. Analyze coordination requirements\n2. Select appropriate specialized agents\n3. Define communication protocols\n4. Launch parallel or sequential execution\n5. Aggregate results and provide unified output`,
+
+            'sc:explain': `1. Assess audience knowledge level\n2. Structure explanation for clarity\n3. Use ${context.detectedPersona || 'mentor'} teaching approach\n4. Provide examples and context\n5. Validate understanding and offer follow-up`,
+
+            'sc:document': `1. Analyze documentation requirements\n2. Structure content for target audience\n3. Apply professional writing standards\n4. Include examples and usage patterns\n5. Review for clarity and completeness`,
+
+            'sc:cleanup': `1. Scan for code quality issues\n2. Identify technical debt and improvements\n3. Apply systematic cleanup methodology\n4. Validate changes don't break functionality\n5. Document improvements and patterns`,
+
+            'sc:git': `1. Analyze current repository state\n2. Plan git workflow strategy\n3. Execute version control operations\n4. Apply best practices for collaboration\n5. Document changes and coordinate team`,
+
+            'sc:estimate': `1. Analyze scope and requirements\n2. Assess complexity and risks\n3. Apply ${context.detectedPersona || 'architect'} estimation methodology\n4. Generate detailed breakdown\n5. Provide confidence intervals and recommendations`,
+
+            'sc:design': `1. Analyze design requirements and constraints\n2. Research patterns and best practices\n3. Create systematic design approach\n4. Generate architecture and component designs\n5. Validate design against requirements`,
+
+            'sc:index': `1. Scan available commands and capabilities\n2. Organize by category and complexity\n3. Generate searchable command catalog\n4. Provide usage examples and recommendations\n5. Create navigation and discovery aids`,
+
+            'sc:load': `1. Analyze project structure and context\n2. Load relevant configurations and templates\n3. Set up appropriate personas and workflows\n4. Initialize project-specific settings\n5. Provide setup summary and next steps`,
             
             'default': `1. Parse command context and requirements\n2. Apply routing intelligence and persona adaptation\n3. Execute core command logic\n4. Validate results against quality gates\n5. Provide actionable next steps`
         };
@@ -828,7 +1062,20 @@ class GeminiSuperClaudeMCPServer {
             'sc:build': 'sc:build "React app with TypeScript" --framework react --tdd',
             'sc:implement': 'sc:implement "user authentication system" --type feature --persona backend',
             'sc:analyze': 'sc:analyze "performance bottlenecks" --performance --ultrathink',
-            'sc:workflow': 'sc:workflow "CI/CD pipeline" --stages build,test,deploy --parallel'
+            'sc:workflow': 'sc:workflow "CI/CD pipeline" --stages build,test,deploy --parallel',
+            'sc:troubleshoot': 'sc:troubleshoot "database connection issues" --trace --logs',
+            'sc:improve': 'sc:improve "code quality issues" --refactor --validate',
+            'sc:test': 'sc:test "authentication flow" --e2e --coverage',
+            'sc:task': 'sc:task "implement user dashboard" --create --milestone v2.0',
+            'sc:spawn': 'sc:spawn "parallel code review" --role analyzer --context security',
+            'sc:explain': 'sc:explain "OAuth2 flow" --detailed --examples',
+            'sc:document': 'sc:document "API endpoints" --technical --api',
+            'sc:cleanup': 'sc:cleanup "legacy code" --unused --duplicates',
+            'sc:git': 'sc:git "feature branch workflow" --checkpoint --analyze',
+            'sc:estimate': 'sc:estimate "microservices migration" --detailed --risks',
+            'sc:design': 'sc:design "user management system" --patterns --architecture',
+            'sc:index': 'sc:index "available commands" --search build --examples',
+            'sc:load': 'sc:load "new project context" --persona architect --config standard'
         };
         return examples[commandName] || `${commandName} "[description]" [flags]`;
     }

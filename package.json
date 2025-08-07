@@ -1,6 +1,6 @@
 {
   "name": "gemini-superclaude-mcp-server",
-  "version": "2.0.0",
+  "version": "1.0.1",
   "description": "Gemini MCP server for SuperClaude Framework v3+ - Intelligent command routing and persona management for Gemini CLI",
   "type": "module",
   "main": "superclaude-server.js",

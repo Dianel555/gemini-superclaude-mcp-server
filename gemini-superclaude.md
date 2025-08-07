@@ -1,18 +1,25 @@
-# Gemini SuperClaude Integration Workflow
+# Gemini SuperClaude MCP 服务器
 
-## 项目概述
+[![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)](https://github.com/Dianel555/gemini-superclaude-mcp-server)
+[![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-green.svg)](https://nodejs.org/)
+[![SuperClaude](https://img.shields.io/badge/SuperClaude-v3%2B-purple.svg)](https://github.com/SuperClaude-Org/SuperClaude_Framework)
+[![Commands](https://img.shields.io/badge/commands-17-success.svg)](README.md#complete-command-set)
+[![Personas](https://img.shields.io/badge/personas-11-success.svg)](README.md#enhanced-persona-system)
 
-本项目为Gemini SuperClaude MCP 服务器，专为 Gemini CLI 设计，实现了智能命令路由、动态角色切换和 MCP 服务器集成编排。
+[English](README.md)|中文
+
+**原项目的完全重写版本**，具备智能命令路由、动态角色切换和真实 MCP 服务器编排，专为 Gemini CLI 设计。**完全符合 SuperClaude Framework v3+ 规范，包含 17 个核心命令和 11 个专业角色。**
 
 ### 🎯 核心改进
 
 **相比原项目的关键提升**：
 
-1. **智能路由系统**: 自动检测上下文并推荐最佳角色和参数
-2. **动态角色行为**: 不仅切换角色，还适配思维模式和行为模式
-3. **MCP 服务器编排**: 真实的多服务器协调机制
-4. **框架对齐**: 完全符合 SuperClaude Framework v3+ 规范
-5. **精简与功能平衡**: 分层架构，核心功能精简，高级功能可选
+1. **✅ 完整命令集**: 17个核心命令，完全符合SuperClaude Framework v3+规范
+2. **✅ 专业角色系统**: 11个专业角色，真实行为适配，非静态文本
+3. **✅ 智能路由系统**: 自动检测上下文并推荐最佳角色和参数
+4. **✅ MCP 服务器编排**: 真实的多服务器协调机制
+5. **✅ 性能优化**: Token智能优化，多种压缩模式
+6. **✅ 分层架构**: 核心功能精简，高级功能可选
 
 ## 🚀 快速开始
 
@@ -26,7 +33,27 @@
 - Git (用于检查点管理)
 ```
 
-### 安装步骤
+### 方式1: NPM安装 (Recommended)
+
+```bash
+# Install globally
+npm install -g gemini-superclaude-mcp-server
+
+# Configure Gemini CLI (~/.gemini/settings.json)
+{
+  "mcpServers": {
+    "superclaude": {
+      "command": "npx",
+      "args": ["-y", "gemini-superclaude-mcp-server"],
+      "env": {
+        "CLAUDE_CONFIG_DIR": "${HOME}/.claude"
+      }
+    }
+  }
+}
+```
+
+### 方式2：本地开发环境
 
 ```bash
 # 1. 克隆项目
@@ -62,11 +89,52 @@ npm start
 }
 ```
 
-## 📋 命令系统
+## 📋 完整命令系统
+
+**17个核心命令**，完全符合SuperClaude Framework v3+规范：
 
 ### 🔧 开发命令
+- **`sc:build`** - 通用项目构建器，智能脚手架
+- **`sc:implement`** - 功能实现，角色驱动方法  
+- **`sc:workflow`** - 多阶段工作流编排
 
-**`sc:build`** - 通用项目构建器
+### 🔍 分析命令
+- **`sc:analyze`** - 多维度代码库分析
+- **`sc:troubleshoot`** - 智能问题诊断和解决
+
+### ✅ 质量命令
+- **`sc:improve`** - 基于证据的代码改进
+- **`sc:test`** - 综合测试策略
+
+### 🚀 运维命令
+- **`sc:task`** - 长期任务和项目管理
+- **`sc:spawn`** - 专业代理生成和协调
+
+### 📚 知识命令
+- **`sc:explain`** - 教育性详细解释
+- **`sc:document`** - 综合文档生成
+
+### 🔧 维护命令
+- **`sc:cleanup`** - 项目清理和技术债务减少
+- **`sc:git`** - Git工作流助手，智能操作
+
+### 📊 规划命令
+- **`sc:estimate`** - 基于证据的项目评估
+- **`sc:design`** - 系统设计和架构编排
+
+### 🔍 元命令
+- **`sc:index`** - 命令目录浏览和发现
+- **`sc:load`** - 项目上下文加载和配置
+
+### ⚙️ 工具命令
+- **`sc:persona`** - 角色管理，自动检测
+- **`sc:mcp`** - MCP服务器编排
+- **`sc:optimize`** - Token优化模式
+
+## 🎯 命令使用示例
+
+### 智能路由示例
+
 ```bash
 # 基础使用
 gemini "使用 sc:build 创建 React 应用"
@@ -79,83 +147,24 @@ gemini "sc:build React TypeScript应用，需要测试驱动开发"
 sc:build "Next.js项目" --framework next --persona architect --flags ["--tdd", "--magic"]
 ```
 
-**`sc:implement`** - 功能实现
-```bash
-# API 开发
-gemini "sc:implement 用户认证系统API"
-# 自动路由: persona: backend, flags: ["--type api"]
+## 🎭 专业角色系统
 
-# UI 组件
-gemini "sc:implement 响应式导航栏组件"  
-# 自动路由: persona: frontend, flags: ["--magic", "--type component"]
-```
-
-**`sc:workflow`** - 工作流编排
-```bash
-gemini "sc:workflow CI/CD流水线 --stages build,test,deploy --parallel"
-```
-
-### 🔍 分析命令
-
-**`sc:analyze`** - 多维度分析
-```bash
-# 智能分析
-gemini "sc:analyze 代码性能瓶颈"
-# 自动路由: persona: analyzer, flags: ["--performance"]
-
-# 安全分析  
-gemini "sc:analyze 安全漏洞扫描"
-# 自动路由: persona: security, flags: ["--security"]
-
-# 架构分析
-gemini "sc:analyze 系统架构设计" 
-# 自动路由: persona: architect, flags: ["--architecture", "--ultrathink"]
-```
-
-**`sc:troubleshoot`** - 智能调试
-```bash
-gemini "sc:troubleshoot API连接超时问题 --trace --logs"
-```
-
-### ✅ 质量命令
-
-**`sc:improve`** - 代码改进
-```bash
-# 重构优化
-gemini "sc:improve 遗留代码现代化 --modernize --refactor"
-
-# 性能优化
-gemini "sc:improve 查询性能优化"
-# 自动路由: persona: performance, flags: ["--optimize"]
-```
-
-**`sc:test`** - 测试策略
-```bash
-gemini "sc:test E2E测试套件 --e2e --coverage"
-```
-
-### 🚀 运维命令
-
-**`sc:task`** - 任务管理
-```bash
-gemini "sc:task 创建新功能里程碑 --create --milestone"
-```
-
-**`sc:spawn`** - 专家代理生成
-```bash
-gemini "sc:spawn 代码审查专家 --role reviewer --context security"
-```
-
-## 🎭 角色系统
+**11个专业角色**，真实行为适配（非静态文本）：
 
 ### 智能角色切换
 
 **自动检测触发词**：
-- `architecture|design|scalability` → `architect`
-- `ui|component|frontend` → `frontend`  
-- `api|backend|database` → `backend`
-- `debug|troubleshoot|analyze` → `analyzer`
-- `security|vulnerability|auth` → `security`
+- `architecture|design|scalability` → `architect` (系统架构师)
+- `ui|component|frontend|react|vue` → `frontend` (前端工程师)
+- `api|backend|server|database` → `backend` (后端工程师)
+- `debug|troubleshoot|analyze` → `analyzer` (分析专家)
+- `security|vulnerability|auth|compliance` → `security` (安全专家)
+- `learn|explain|understand|guide|teach` → `mentor` (导师专家)
+- `refactor|cleanup|simplify|technical debt` → `refactorer` (重构专家)
+- `optimize|performance|speed|bottleneck` → `performance` (性能专家)
+- `test|quality|validation|coverage` → `qa` (质量保证)
+- `deploy|infrastructure|automation|ci/cd` → `devops` (运维专家)
+- `document|write|guide|communication` → `scribe` (文档专家)
 
 ### 角色管理命令
 
@@ -176,7 +185,7 @@ gemini "sc:persona auto '正在开发React组件库'"
 ### 角色特化行为
 
 **architect** (系统架构师)
-- 🎯 关注点: 长期演进和可扩展性
+- 🎯 关注点: 系统设计和长期演进
 - 🧠 思维模式: 系统性思考
 - 🔗 偏好工具: Sequential, Context7
 - ⚡ 专长命令: sc:build, sc:analyze, sc:workflow
@@ -204,6 +213,42 @@ gemini "sc:persona auto '正在开发React组件库'"
 - 🧠 思维模式: 威胁聚焦
 - 🔗 偏好工具: Sequential, Context7
 - ⚡ 专长命令: sc:analyze, sc:improve
+
+**mentor** (导师专家)
+- 🎯 关注点: 知识传授和理解培养
+- 🧠 思维模式: 教育导向
+- 🔗 偏好工具: Context7, Sequential
+- ⚡ 专长命令: sc:explain, sc:document, sc:index
+
+**refactorer** (重构专家)
+- 🎯 关注点: 代码质量和技术债务管理
+- 🧠 思维模式: 质量聚焦
+- 🔗 偏好工具: Sequential
+- ⚡ 专长命令: sc:improve, sc:cleanup
+
+**performance** (性能专家)
+- 🎯 关注点: 性能优化和瓶颈消除
+- 🧠 思维模式: 指标驱动
+- 🔗 偏好工具: Playwright, Sequential
+- ⚡ 专长命令: sc:analyze, sc:improve, sc:test
+
+**qa** (质量保证)
+- 🎯 关注点: 质量保证和测试专业化
+- 🧠 思维模式: 预防聚焦
+- 🔗 偏好工具: Playwright, Sequential
+- ⚡ 专长命令: sc:test, sc:troubleshoot, sc:analyze
+
+**devops** (运维专家)
+- 🎯 关注点: 基础设施和部署自动化
+- 🧠 思维模式: 运维聚焦
+- 🔗 偏好工具: Sequential, Context7
+- ⚡ 专长命令: sc:git, sc:workflow, sc:task
+
+**scribe** (文档专家)
+- 🎯 关注点: 专业文档和沟通专业化
+- 🧠 思维模式: 沟通聚焦
+- 🔗 偏好工具: Context7, Sequential
+- ⚡ 专长命令: sc:document, sc:explain, sc:git
 
 ## 🔗 MCP 服务器集成
 
@@ -386,7 +431,7 @@ gemini "sc:build 'project' --auto_route false"
 
 ## 🔄 更新日志
 
-### v1.0.0 (当前版本)
+### v1.0.1 (当前版本)
 - ✅ 完全重写架构，支持SuperClaude Framework v3+
 - ✅ 智能路由系统，自动角色和参数检测
 - ✅ 真实MCP服务器集成编排
@@ -399,14 +444,6 @@ gemini "sc:build 'project' --auto_route false"
 - ❌ 伪角色系统，无行为差异  
 - ❌ 缺失MCP服务器真实集成
 - ❌ 不符合最新SuperClaude框架规范
-
-## 🎯 路线图
-
-### v1.1.0 (计划中)
-- 🔄 机器学习路由优化
-- 🔄 自定义角色配置支持
-- 🔄 更多MCP服务器集成
-- 🔄 可视化配置界面
 
 ---
 

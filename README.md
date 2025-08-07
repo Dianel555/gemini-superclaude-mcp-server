@@ -1,12 +1,14 @@
 # Gemini SuperClaude MCP Server
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Dianel555/gemini-superclaude-mcp-server)
+[![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)](https://github.com/Dianel555/gemini-superclaude-mcp-server)
 [![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-green.svg)](https://nodejs.org/)
 [![SuperClaude](https://img.shields.io/badge/SuperClaude-v3%2B-purple.svg)](https://github.com/SuperClaude-Org/SuperClaude_Framework)
+[![Commands](https://img.shields.io/badge/commands-17-success.svg)](README.md#complete-command-set)
+[![Personas](https://img.shields.io/badge/personas-11-success.svg)](README.md#enhanced-persona-system)
 
 English|[中文](gemini-superclaude.md)
 
-A **complete rewrite** of the original SuperClaude MCP server with intelligent command routing, dynamic persona switching, and real MCP server orchestration for Gemini CLI.Th
+A **complete rewrite** of the original SuperClaude MCP server with intelligent command routing, dynamic persona switching, and real MCP server orchestration for Gemini CLI. **Full SuperClaude Framework v3+ compliance with 17 core commands and 11 specialized personas.**
 
 ## 🚀 What's New in  Gemini SuperClaude MCP Server
 
@@ -114,15 +116,21 @@ gemini "Debug API performance bottleneck"
 
 ## 🎭 Enhanced Persona System
 
-Unlike the original's static personas, v2.0 provides **behavioral adaptation**:
+**11 Specialized Personas** with true behavioral adaptation (not just static text):
 
 | Persona | Focus | Thinking Mode | Auto-Triggers | Specialization |
 |---------|-------|---------------|---------------|----------------|
-| **architect** | Long-term evolution | Systematic | architecture, design, scalability | sc:build, sc:workflow |
-| **frontend** | User experience | User-centric | ui, component, responsive | sc:implement, sc:test |
-| **backend** | Data integrity | Data-driven | api, database, service | sc:implement, sc:troubleshoot |
+| **architect** | Systems design | Systematic | architecture, design, scalability | sc:build, sc:analyze, sc:workflow |
+| **frontend** | User experience | User-centric | ui, component, responsive | sc:build, sc:implement, sc:test |
+| **backend** | Data integrity | Data-driven | api, database, service | sc:implement, sc:analyze, sc:troubleshoot |
 | **analyzer** | Root cause analysis | Evidence-based | debug, investigate, analyze | sc:analyze, sc:troubleshoot |
 | **security** | Threat modeling | Threat-focused | security, vulnerability, auth | sc:analyze, sc:improve |
+| **mentor** | Knowledge transfer | Educational | learn, explain, understand | sc:explain, sc:document, sc:index |
+| **refactorer** | Code quality | Quality-focused | refactor, cleanup, technical debt | sc:improve, sc:cleanup |
+| **performance** | Optimization | Metrics-driven | optimize, performance, bottleneck | sc:analyze, sc:improve, sc:test |
+| **qa** | Quality assurance | Prevention-focused | test, quality, validation | sc:test, sc:troubleshoot, sc:analyze |
+| **devops** | Infrastructure | Operations-focused | deploy, infrastructure, automation | sc:git, sc:workflow, sc:task |
+| **scribe** | Documentation | Communication-focused | document, write, guide | sc:document, sc:explain, sc:git |
 
 ## 🔗 Real MCP Integration
 
@@ -145,22 +153,40 @@ gemini "sc:mcp enable sequential magic"
 
 ## 📋 Complete Command Set
 
+**17 Core Commands** with full SuperClaude Framework v3+ compliance:
+
 ### Development
 - `sc:build` - Universal project builder with intelligent scaffolding
-- `sc:implement` - Feature implementation with persona-driven approach
+- `sc:implement` - Feature implementation with persona-driven approach  
 - `sc:workflow` - Multi-stage workflow orchestration
 
 ### Analysis  
 - `sc:analyze` - Multi-dimensional codebase analysis
-- `sc:troubleshoot` - Intelligent problem diagnosis
+- `sc:troubleshoot` - Intelligent problem diagnosis and resolution
 
 ### Quality
 - `sc:improve` - Evidence-based code improvement
 - `sc:test` - Comprehensive testing strategy
 
 ### Operations
-- `sc:task` - Long-term task management
-- `sc:spawn` - Specialized agent coordination
+- `sc:task` - Long-term task and project management
+- `sc:spawn` - Specialized agent spawning and coordination
+
+### Knowledge
+- `sc:explain` - Educational explanations with detailed context
+- `sc:document` - Comprehensive documentation generation
+
+### Maintenance
+- `sc:cleanup` - Project cleanup and technical debt reduction
+- `sc:git` - Git workflow assistant with intelligent operations
+
+### Planning
+- `sc:estimate` - Evidence-based project estimation
+- `sc:design` - System design and architecture orchestration
+
+### Meta
+- `sc:index` - Command catalog browsing and discovery
+- `sc:load` - Project context loading and configuration
 
 ### Utilities
 - `sc:persona` - Persona management with auto-detection
