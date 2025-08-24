@@ -53,8 +53,9 @@ tmp/
 ehthumbs.db
 Thumbs.db
 
-# 项目特定忽略文件
+# 项目特定忽略文件或文件夹
 claude-gemini-superclaude.md
+SuperClaude_Framework/
 
 # 备份文件
 *.bak

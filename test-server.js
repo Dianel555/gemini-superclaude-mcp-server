@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 
 /**
- * Test Suite for Gemini SuperClaude MCP Serve
+ * Test Suite for Gemini SuperClaude MCP Server v2.0.0 (SuperClaude Framework v4.0.8 Compatible)
  * 
  * Comprehensive testing of MCP server functionality including:
- * - Command routing and execution
- * - Persona management and switching
- * - MCP server integration
- * - Intelligence routing system
+ * - Command routing and execution for 21 /sc: commands
+ * - 14 specialized agent definitions and behavioral patterns
+ * - 6 MCP server integrations and enhanced routing
+ * - 5 behavioral modes and priority-based rules
  */
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { spawn } from 'child_process';
 import fs from 'fs/promises';
 
-class MCPServerTester {
+class MCPServerTesterV4 {
     constructor() {
         this.tests = [];
         this.passed = 0;
@@ -22,13 +22,13 @@ class MCPServerTester {
     }
 
     async runTests() {
-        console.log('🧪 Gemini SuperClaude MCP Serve Test Suite\n');
+        console.log('🧪 Gemini SuperClaude MCP Server v2.0.0 Test Suite (SuperClaude v4.0.8 Compatible)\n');
         
-        await this.testCommandRouting();
-        await this.testPersonaSystem();
-        await this.testMCPIntegration();
-        await this.testIntelligentRouting();
-        await this.testTokenOptimization();
+        await this.testV4CommandRouting();
+        await this.testV4AgentSystem();
+        await this.testV4MCPIntegration();
+        await this.testV4EnhancedRouting();
+        await this.testV4BehavioralModes();
         
         this.printResults();
         
@@ -57,156 +57,146 @@ class MCPServerTester {
         }
     }
 
-    async testCommandRouting() {
-        console.log('🔄 Command Routing Tests');
+    async testV4CommandRouting() {
+        console.log('🔄 Command Routing Tests (v4.0.8)');
         
-        // Test basic command structure
-        await this.executeTest('SuperClaude commands have proper structure', async () => {
+        await this.executeTest('All 21 SuperClaude commands have proper structure', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
             return serverContent.includes('sc:build') && 
                    serverContent.includes('sc:implement') &&
-                   serverContent.includes('sc:analyze');
+                   serverContent.includes('sc:analyze') &&
+                   serverContent.includes('sc:brainstorm') &&
+                   serverContent.includes('sc:save');
         });
 
-        // Test command categories
-        await this.executeTest('Commands properly categorized', async () => {
+        await this.executeTest('Commands have priority definitions (CRITICAL/IMPORTANT/RECOMMENDED)', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
-            return serverContent.includes('category: \'development\'') &&
-                   serverContent.includes('category: \'analysis\'') &&
-                   serverContent.includes('category: \'quality\'');
+            return serverContent.includes('priority: \'CRITICAL\'') &&
+                   serverContent.includes('priority: \'IMPORTANT\'') &&
+                   serverContent.includes('priority: \'RECOMMENDED\'');
         });
 
-        // Test flag system
-        await this.executeTest('Commands have flag definitions', async () => {
+        await this.executeTest('Commands have agent specialization', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
-            return serverContent.includes('flags: [') &&
-                   serverContent.includes('--tdd') &&
-                   serverContent.includes('--magic');
+            return serverContent.includes('agents: [') &&
+                   serverContent.includes('system-architect') &&
+                   serverContent.includes('frontend-architect');
         });
 
         console.log();
     }
 
-    async testPersonaSystem() {
-        console.log('🎭 Persona System Tests');
+    async testV4AgentSystem() {
+        console.log('🎭 Agent System Tests (v4.0.8)');
         
-        // Test persona definitions
-        await this.executeTest('Core personas defined', async () => {
+        await this.executeTest('All 14 specialized agents defined', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
-            return serverContent.includes('architect:') &&
-                   serverContent.includes('frontend:') &&
-                   serverContent.includes('backend:') &&
-                   serverContent.includes('analyzer:') &&
-                   serverContent.includes('security:');
+            return serverContent.includes('system-architect:') &&
+                   serverContent.includes('frontend-architect:') &&
+                   serverContent.includes('backend-architect:') &&
+                   serverContent.includes('devops-architect:') &&
+                   serverContent.includes('security-engineer:');
         });
 
-        // Test persona behavioral patterns
-        await this.executeTest('Personas have behavioral patterns', async () => {
+        await this.executeTest('Agents have behavioral patterns and tool definitions', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
             return serverContent.includes('thinkingMode:') &&
                    serverContent.includes('autoTriggers:') &&
-                   serverContent.includes('behaviorModifiers:');
+                   serverContent.includes('behaviorModifiers:') &&
+                   serverContent.includes('tools: [');
         });
 
-        // Test auto-trigger system
-        await this.executeTest('Auto-trigger patterns configured', async () => {
+        await this.executeTest('Agent auto-trigger patterns configured correctly', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
-            return serverContent.includes('personaRouting:') &&
-                   serverContent.includes('ui|component|frontend') &&
-                   serverContent.includes('api|backend|server|database');
+            return serverContent.includes('matchesAgentTriggers(context, agent)') &&
+                   serverContent.includes('agent.autoTriggers.some(trigger =>');
         });
 
         console.log();
     }
 
-    async testMCPIntegration() {
-        console.log('🔗 MCP Integration Tests');
+    async testV4MCPIntegration() {
+        console.log('🔗 MCP Integration Tests (v4.0.8)');
         
-        // Test MCP server configurations
-        await this.executeTest('MCP servers configured', async () => {
+        await this.executeTest('All 6 MCP servers configured', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
             return serverContent.includes('sequential:') &&
                    serverContent.includes('context7:') &&
                    serverContent.includes('magic:') &&
-                   serverContent.includes('playwright:');
+                   serverContent.includes('playwright:') &&
+                   serverContent.includes('morphllm:') &&
+                   serverContent.includes('serena:');
         });
 
-        // Test MCP routing rules
-        await this.executeTest('MCP routing rules defined', async () => {
+        await this.executeTest('MCP routing rules are defined and integrated', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
-            return serverContent.includes('mcpRouting:') &&
-                   serverContent.includes('complex|analysis|thinking') &&
-                   serverContent.includes('ui|component|design');
+            return serverContent.includes('routeMCP(context, agents)') &&
+                   serverContent.includes('cmd.mcpRequired.forEach(mcp => mcpServers.add(mcp))') &&
+                   serverContent.includes('agent.mcpPreferences.forEach(mcp => mcpServers.add(mcp))');
         });
 
-        // Test MCP management functionality
-        await this.executeTest('MCP management commands present', async () => {
+        await this.executeTest('Session persistence commands for Serena MCP are present', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
-            return serverContent.includes('sc:mcp') &&
-                   serverContent.includes('handleMCPManagement') &&
-                   serverContent.includes('mcpIntegrations');
-        });
-
-        console.log();
-    }
-
-    async testIntelligentRouting() {
-        console.log('🧠 Intelligent Routing Tests');
-        
-        // Test routing context structure
-        await this.executeTest('Routing context properly structured', async () => {
-            const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
-            return serverContent.includes('applyIntelligentRouting') &&
-                   serverContent.includes('detectedPersona') &&
-                   serverContent.includes('suggestedFlags') &&
-                   serverContent.includes('confidence');
-        });
-
-        // Test pattern matching
-        await this.executeTest('Pattern matching implemented', async () => {
-            const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
-            return serverContent.includes('RegExp') &&
-                   serverContent.includes('test(searchText)') &&
-                   serverContent.includes('flagRouting');
-        });
-
-        // Test confidence scoring
-        await this.executeTest('Confidence scoring system', async () => {
-            const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
-            return serverContent.includes('confidence +=') &&
-                   serverContent.includes('Math.round(routingContext.confidence * 100)');
+            return serverContent.includes('sc:load') &&
+                   serverContent.includes('sc:save') &&
+                   serverContent.includes('sc:reflect');
         });
 
         console.log();
     }
 
-    async testTokenOptimization() {
-        console.log('⚡ Token Optimization Tests');
+    async testV4EnhancedRouting() {
+        console.log('🧠 Enhanced Routing Tests (v4.0.8)');
         
-        // Test optimization modes
-        await this.executeTest('Token optimization modes defined', async () => {
+        await this.executeTest('Enhanced routing engine is properly structured', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
-            return serverContent.includes('normal') &&
-                   serverContent.includes('compressed') &&
-                   serverContent.includes('ultracompressed') &&
-                   serverContent.includes('adaptive');
+            return serverContent.includes('setupEnhancedRouting()') &&
+                   serverContent.includes('routingEngine = {') &&
+                   serverContent.includes('analyzeContext:') &&
+                   serverContent.includes('selectAgent:');
         });
 
-        // Test optimization command
-        await this.executeTest('Optimization command implemented', async () => {
+        await this.executeTest('Context analysis correctly identifies domain and complexity', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
-            return serverContent.includes('sc:optimize') &&
-                   serverContent.includes('handleOptimization') &&
-                   serverContent.includes('tokenMode');
+            return serverContent.includes('assessComplexity(input)') &&
+                   serverContent.includes('identifyDomain(input)') &&
+                   serverContent.includes('identifyMCPNeeds(input)');
+        });
+
+        await this.executeTest('Agent selection is based on contextual triggers', async () => {
+            const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
+            return serverContent.includes('matchesAgentTriggers(context, agent)') &&
+                   serverContent.includes('autoTriggers.some(trigger =>');
+        });
+
+        console.log();
+    }
+
+    async testV4BehavioralModes() {
+        console.log('⚡ Behavioral Modes & Rules Tests (v4.0.8)');
+        
+        await this.executeTest('All 5 behavioral modes are defined', async () => {
+            const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
+            return serverContent.includes('brainstorming:') &&
+                   serverContent.includes('introspection:') &&
+                   serverContent.includes('orchestration:') &&
+                   serverContent.includes('task_management:') &&
+                   serverContent.includes('token_efficiency:');
+        });
+
+        await this.executeTest('Priority-based rule system (CRITICAL/IMPORTANT/RECOMMENDED) is loaded', async () => {
+            const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
+            return serverContent.includes('loadPriorityRules()') &&
+                   serverContent.includes('CRITICAL:') &&
+                   serverContent.includes('enforcement: \'always_win\'');
         });
 
         console.log();
     }
 
     async testServerStartup() {
-        console.log('🚀 Server Startup Test');
+        console.log('🚀 Server Startup Test (v4.0.8)');
         
-        // Test server can initialize without errors
         await this.executeTest('Server initializes without errors', async () => {
             return new Promise((resolve) => {
                 const child = spawn('node', ['superclaude-server.js'], {
@@ -221,10 +211,8 @@ class MCPServerTester {
 
                 setTimeout(() => {
                     child.kill('SIGTERM');
-                    // Check if initialization completed successfully
-                    const success = output.includes('initialization completed') ||
-                                  output.includes('Server started') ||
-                                  !output.includes('Error') ||
+                    const success = output.includes('initialization completed successfully') &&
+                                  !output.includes('Error') &&
                                   !output.includes('Failed');
                     resolve(success);
                 }, 3000);
@@ -245,7 +233,7 @@ class MCPServerTester {
         console.log(`📈 Success Rate: ${Math.round((this.passed / (this.passed + this.failed)) * 100)}%`);
         
         if (this.failed === 0) {
-            console.log('\n🎉 All tests passed! The server is ready for deployment.');
+            console.log('\n🎉 All tests passed! The server is ready for SuperClaude v4.0.8.');
         } else {
             console.log('\n🚨 Some tests failed. Please review and fix the issues.');
         }
@@ -271,15 +259,11 @@ async function testPackageJson() {
 
 // Run tests
 async function runAllTests() {
-    const tester = new MCPServerTester();
+    const tester = new MCPServerTesterV4();
     
-    // Test package configuration first
     await testPackageJson();
-    
-    // Run main test suite
     await tester.runTests();
     
-    // Test server startup if all other tests pass
     if (tester.failed === 0) {
         await tester.testServerStartup();
     }

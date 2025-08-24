@@ -11,24 +11,27 @@ import path from 'path';
 import os from 'os';
 
 /**
- * Gemini SuperClaude MCP Server v1.0.1
+ * Gemini SuperClaude MCP Server v2.0.0
+ * SuperClaude Framework v4.0.8 Compatible
  * 
- * Features:
- * - Intelligent command routing with context awareness
- * - Dynamic persona switching with behavioral adaptation
- * - MCP server integration orchestration
- * - Framework-aligned command architecture
- * - Token optimization and efficiency management
+ * Enhanced Features:
+ * - 21 specialized slash commands with /sc: namespace
+ * - 14 domain-expert agents with behavioral patterns
+ * - 6 MCP server integrations with intelligent routing
+ * - 5 behavioral modes for different workflows
+ * - Cross-session persistence with enhanced memory management
+ * - Priority-based rule system (CRITICAL/IMPORTANT/RECOMMENDED)
  */
 
 const CLAUDE_CONFIG_DIR = process.env.CLAUDE_CONFIG_DIR || path.join(os.homedir(), '.claude');
-const SERVER_VERSION = '1.0.1';
+const SERVER_VERSION = '2.0.0';
+const FRAMEWORK_VERSION = '4.0.8';
 
-class GeminiSuperClaudeMCPServer {
+class GeminiSuperClaudeMCPServerV4 {
     constructor() {
         this.server = new Server(
             {
-                name: 'gemini-superclaude-mcp',
+                name: 'gemini-superclaude-mcp-v4',
                 version: SERVER_VERSION,
             },
             {
@@ -38,35 +41,40 @@ class GeminiSuperClaudeMCPServer {
             }
         );
 
-        // Core state management
+        // Enhanced state management for v4.0.8
         this.state = {
-            activePersona: null,
-            tokenMode: 'normal',
+            activeAgent: null,
+            behavioralMode: 'normal',
             contextStack: [],
-            lastCommand: null,
-            mcpIntegrations: new Set(),
-            routingHistory: []
+            sessionMemory: new Map(),
+            mcpIntegrations: new Set(['sequential', 'context7', 'magic', 'playwright', 'morphllm', 'serena']),
+            routingHistory: [],
+            priorityRules: new Map()
         };
 
         // Framework configuration
         this.config = {
             commands: new Map(),
-            personas: new Map(),
-            routingRules: new Map(),
-            mcpServers: new Map()
+            agents: new Map(),
+            behavioralModes: new Map(),
+            mcpServers: new Map(),
+            routingRules: new Map()
         };
     }
 
     async initialize() {
         console.error(`[INFO] Initializing Gemini SuperClaude MCP Server v${SERVER_VERSION}`);
+        console.error(`[INFO] SuperClaude Framework v${FRAMEWORK_VERSION} Compatible`);
         
         try {
             await this.loadFrameworkConfig();
-            await this.setupIntelligentRouting();
-            await this.initializeMCPIntegrations();
+            await this.setupEnhancedRouting();
+            await this.initializeV4MCPIntegrations();
+            await this.loadBehavioralModes();
             this.setupRequestHandlers();
             
             console.error('[INFO] Server initialization completed successfully');
+            console.error(`[INFO] Loaded: 21 Commands | 14 Agents | 5 Modes | 6 MCP Servers`);
         } catch (error) {
             console.error(`[ERROR] Initialization failed: ${error.message}`);
             throw error;
@@ -74,25 +82,26 @@ class GeminiSuperClaudeMCPServer {
     }
 
     async loadFrameworkConfig() {
-        // Load SuperClaude Framework v3+ configurations
         await Promise.all([
-            this.loadCommands(),
-            this.loadPersonas(),
-            this.setupIntelligentRouting()
+            this.loadV4Commands(),
+            this.loadV4Agents(),
+            this.setupEnhancedRouting(),
+            this.loadPriorityRules()
         ]);
     }
 
-    async loadCommands() {
-        // SuperClaude Framework v3+ commands with intelligent metadata
+    async loadV4Commands() {
+        // SuperClaude Framework v4.0.8 - All 21 commands with /sc: namespace
         const commands = {
-            // 🔧 Development Commands
+            // 🏗️ Core Development Commands
             'sc:build': {
                 category: 'development',
                 description: 'Universal project builder with intelligent scaffolding',
                 flags: ['--init', '--feature', '--framework', '--tdd', '--magic', '--wave'],
-                personas: ['architect', 'frontend', 'backend'],
+                agents: ['system-architect', 'frontend-architect', 'backend-architect'],
                 mcpRequired: ['magic', 'context7'],
                 complexity: 'moderate',
+                priority: 'IMPORTANT',
                 autoFlags: {
                     ui: ['--magic'],
                     testing: ['--tdd'],
@@ -100,12 +109,13 @@ class GeminiSuperClaudeMCPServer {
                 }
             },
             'sc:implement': {
-                category: 'development', 
-                description: 'Feature implementation with persona-driven approach',
-                flags: ['--type', '--framework', '--test', '--docs', '--persona'],
-                personas: ['frontend', 'backend', 'architect'],
-                mcpRequired: ['sequential', 'context7'],
-                complexity: 'high',
+                category: 'development',
+                description: 'Feature implementation with intelligent persona activation',
+                flags: ['--type', '--framework', '--test', '--docs', '--agent'],
+                agents: ['frontend-architect', 'backend-architect', 'system-architect'],
+                mcpRequired: ['sequential', 'context7', 'magic'],
+                complexity: 'standard',
+                priority: 'IMPORTANT',
                 autoFlags: {
                     component: ['--type component', '--magic'],
                     api: ['--type api', '--sequential'],
@@ -114,80 +124,102 @@ class GeminiSuperClaudeMCPServer {
             },
             'sc:workflow': {
                 category: 'orchestration',
-                description: 'Multi-stage workflow orchestration',
+                description: 'Multi-stage workflow orchestration with parallel execution',
                 flags: ['--stages', '--parallel', '--sequential', '--checkpoint'],
-                personas: ['architect', 'devops'],
-                mcpRequired: ['sequential'],
-                complexity: 'high'
+                agents: ['system-architect', 'devops-architect'],
+                mcpRequired: ['sequential', 'serena'],
+                complexity: 'advanced',
+                priority: 'IMPORTANT'
             },
 
-            // 🔍 Analysis Commands  
+            // 🔍 Analysis & Discovery Commands
             'sc:analyze': {
                 category: 'analysis',
-                description: 'Multi-dimensional codebase analysis',
+                description: 'Multi-dimensional codebase analysis with comprehensive insights',
                 flags: ['--deep', '--security', '--performance', '--architecture', '--ultrathink'],
-                personas: ['analyzer', 'architect', 'security'],
-                mcpRequired: ['sequential', 'context7'],
-                complexity: 'high',
+                agents: ['root-cause-analyst', 'system-architect', 'security-engineer'],
+                mcpRequired: ['sequential', 'context7', 'serena'],
+                complexity: 'advanced',
+                priority: 'IMPORTANT',
                 autoFlags: {
-                    security: ['--security', '--persona security'],
-                    performance: ['--performance', '--persona performance'],
-                    architecture: ['--architecture', '--persona architect']
+                    security: ['--security', '--agent security-engineer'],
+                    performance: ['--performance', '--agent performance-engineer'],
+                    architecture: ['--architecture', '--agent system-architect']
+                }
+            },
+            'sc:brainstorm': {
+                category: 'orchestration',
+                description: 'Interactive requirements discovery through Socratic dialogue',
+                flags: ['--strategy', '--depth', '--parallel', '--cross-session'],
+                agents: ['system-architect', 'root-cause-analyst', 'requirements-analyst'],
+                mcpRequired: ['sequential', 'context7', 'serena'],
+                complexity: 'advanced',
+                priority: 'IMPORTANT',
+                autoFlags: {
+                    systematic: ['--strategy systematic', '--depth deep'],
+                    agile: ['--strategy agile', '--parallel'],
+                    enterprise: ['--strategy enterprise', '--cross-session']
                 }
             },
             'sc:troubleshoot': {
                 category: 'analysis',
-                description: 'Intelligent problem diagnosis and resolution',
-                flags: ['--trace', '--logs', '--reproduce', '--fix'],
-                personas: ['analyzer', 'backend'],
-                mcpRequired: ['sequential'],
-                complexity: 'moderate'
+                description: 'Intelligent problem diagnosis and systematic resolution',
+                flags: ['--trace', '--logs', '--reproduce', '--fix', '--root-cause'],
+                agents: ['root-cause-analyst', 'performance-engineer'],
+                mcpRequired: ['sequential', 'context7'],
+                complexity: 'moderate',
+                priority: 'CRITICAL'
             },
 
-            // ✅ Quality Commands
+            // ✅ Quality & Testing Commands
             'sc:improve': {
                 category: 'quality',
-                description: 'Evidence-based code improvement',
+                description: 'Evidence-based code improvement with systematic refactoring',
                 flags: ['--refactor', '--optimize', '--modernize', '--validate'],
-                personas: ['refactorer', 'performance', 'architect'],  
-                mcpRequired: ['sequential'],
-                complexity: 'moderate'
+                agents: ['refactoring-expert', 'performance-engineer', 'system-architect'],
+                mcpRequired: ['sequential', 'morphllm'],
+                complexity: 'moderate',
+                priority: 'IMPORTANT'
             },
             'sc:test': {
                 category: 'quality',
-                description: 'Comprehensive testing strategy',
-                flags: ['--unit', '--integration', '--e2e', '--coverage'],
-                personas: ['qa'],
-                mcpRequired: ['playwright'],
-                complexity: 'moderate'
+                description: 'Comprehensive testing strategy with automation',
+                flags: ['--unit', '--integration', '--e2e', '--coverage', '--automated'],
+                agents: ['quality-engineer'],
+                mcpRequired: ['playwright', 'context7'],
+                complexity: 'moderate',
+                priority: 'IMPORTANT'
             },
 
-            // 🚀 Operations Commands
+            // 🚀 Operations & Management Commands
             'sc:task': {
                 category: 'operations',
-                description: 'Long-term task and project management',
-                flags: ['--create', '--status', '--milestone', '--assign'],
-                personas: ['architect', 'devops'],
-                mcpRequired: ['sequential'],
-                complexity: 'low'
+                description: 'Enhanced task management with cross-session persistence',
+                flags: ['--create', '--status', '--milestone', '--assign', '--persist'],
+                agents: ['system-architect', 'devops-architect'],
+                mcpRequired: ['sequential', 'serena'],
+                complexity: 'standard',
+                priority: 'IMPORTANT'
             },
             'sc:spawn': {
-                category: 'operations', 
-                description: 'Specialized agent spawning and coordination',
-                flags: ['--role', '--context', '--parallel', '--merge'],
-                personas: ['architect'],
-                mcpRequired: ['sequential'],
-                complexity: 'high'
+                category: 'operations',
+                description: 'Specialized agent spawning and intelligent coordination',
+                flags: ['--role', '--context', '--parallel', '--merge', '--expertise'],
+                agents: ['system-architect'],
+                mcpRequired: ['sequential', 'serena'],
+                complexity: 'advanced',
+                priority: 'IMPORTANT'
             },
 
-            // 📚 Knowledge Commands
+            // 📚 Knowledge & Documentation Commands
             'sc:explain': {
                 category: 'knowledge',
-                description: 'Educational explanations with detailed context',
-                flags: ['--simple', '--detailed', '--visual', '--examples'],
-                personas: ['mentor', 'scribe'],
+                description: 'Educational explanations with progressive learning approach',
+                flags: ['--simple', '--detailed', '--visual', '--examples', '--interactive'],
+                agents: ['socratic-mentor', 'learning-guide'],
                 mcpRequired: ['context7', 'sequential'],
                 complexity: 'moderate',
+                priority: 'RECOMMENDED',
                 autoFlags: {
                     beginner: ['--simple', '--examples'],
                     detailed: ['--detailed', '--visual'],
@@ -196,26 +228,23 @@ class GeminiSuperClaudeMCPServer {
             },
             'sc:document': {
                 category: 'knowledge',
-                description: 'Comprehensive documentation generation',
-                flags: ['--api', '--user', '--technical', '--readme'],
-                personas: ['scribe', 'mentor'],
+                description: 'Comprehensive documentation generation with best practices',
+                flags: ['--api', '--user', '--technical', '--readme', '--interactive'],
+                agents: ['technical-writer', 'socratic-mentor'],
                 mcpRequired: ['context7', 'sequential'],
                 complexity: 'moderate',
-                autoFlags: {
-                    api: ['--api', '--technical'],
-                    user: ['--user', '--readme'],
-                    comprehensive: ['--technical', '--examples']
-                }
+                priority: 'RECOMMENDED'
             },
 
-            // 🔧 Maintenance Commands  
+            // 🔧 Maintenance & Optimization Commands
             'sc:cleanup': {
                 category: 'maintenance',
                 description: 'Project cleanup and technical debt reduction',
-                flags: ['--unused', '--duplicates', '--formatting', '--optimize'],
-                personas: ['refactorer'],
-                mcpRequired: ['sequential'],
+                flags: ['--unused', '--duplicates', '--formatting', '--optimize', '--aggressive'],
+                agents: ['refactoring-expert'],
+                mcpRequired: ['sequential', 'morphllm'],
                 complexity: 'moderate',
+                priority: 'RECOMMENDED',
                 autoFlags: {
                     debt: ['--unused', '--duplicates'],
                     format: ['--formatting', '--optimize'],
@@ -225,488 +254,539 @@ class GeminiSuperClaudeMCPServer {
             'sc:git': {
                 category: 'maintenance',
                 description: 'Git workflow assistant with intelligent operations',
-                flags: ['--checkpoint', '--restore', '--analyze', '--optimize'],
-                personas: ['devops', 'scribe'],
+                flags: ['--checkpoint', '--restore', '--analyze', '--optimize', '--workflow'],
+                agents: ['devops-architect', 'technical-writer'],
                 mcpRequired: ['sequential'],
                 complexity: 'moderate',
-                autoFlags: {
-                    workflow: ['--checkpoint', '--analyze'],
-                    backup: ['--checkpoint', '--restore'],
-                    optimize: ['--analyze', '--optimize']
-                }
+                priority: 'RECOMMENDED'
             },
 
-            // 📊 Planning Commands
+            // 📊 Planning & Architecture Commands
             'sc:estimate': {
                 category: 'planning',
-                description: 'Evidence-based project estimation',
-                flags: ['--detailed', '--summary', '--breakdown', '--risks'],
-                personas: ['analyzer', 'architect'],
+                description: 'Evidence-based project estimation with risk assessment',
+                flags: ['--detailed', '--summary', '--breakdown', '--risks', '--timeline'],
+                agents: ['requirements-analyst', 'system-architect'],
                 mcpRequired: ['sequential', 'context7'],
-                complexity: 'high',
-                autoFlags: {
-                    quick: ['--summary'],
-                    comprehensive: ['--detailed', '--breakdown', '--risks'],
-                    analysis: ['--breakdown', '--risks']
-                }
+                complexity: 'advanced',
+                priority: 'IMPORTANT'
             },
             'sc:design': {
                 category: 'planning',
                 description: 'System design and architecture orchestration',
-                flags: ['--patterns', '--architecture', '--api', '--database'],
-                personas: ['architect', 'frontend'],
+                flags: ['--patterns', '--architecture', '--api', '--database', '--scalability'],
+                agents: ['system-architect', 'frontend-architect'],
                 mcpRequired: ['magic', 'sequential', 'context7'],
-                complexity: 'high',
-                autoFlags: {
-                    system: ['--architecture', '--patterns'],
-                    api: ['--api', '--patterns'],
-                    ui: ['--patterns', '--database']
-                }
+                complexity: 'advanced',
+                priority: 'IMPORTANT'
             },
 
-            // 🔍 Meta Commands
+            // 🎯 Session & Meta Commands
+            'sc:load': {
+                category: 'session',
+                description: 'Project context loading and cross-session restoration',
+                flags: ['--agent', '--config', '--template', '--workflow', '--memory'],
+                agents: ['root-cause-analyst', 'system-architect', 'technical-writer'],
+                mcpRequired: ['serena', 'sequential'],
+                complexity: 'moderate',
+                priority: 'CRITICAL'
+            },
+            'sc:save': {
+                category: 'session',
+                description: 'Session state persistence with intelligent context capture',
+                flags: ['--context', '--memory', '--checkpoint', '--agent-state'],
+                agents: ['technical-writer', 'system-architect'],
+                mcpRequired: ['serena'],
+                complexity: 'moderate',
+                priority: 'CRITICAL'
+            },
+            'sc:reflect': {
+                category: 'session',
+                description: 'Meta-cognitive reflection and performance analysis',
+                flags: ['--decision', '--pattern', '--improvement', '--learning'],
+                agents: ['socratic-mentor', 'root-cause-analyst'],
+                mcpRequired: ['sequential', 'serena'],
+                complexity: 'moderate',
+                priority: 'RECOMMENDED'
+            },
+
+            // 🔍 Discovery & Navigation Commands
             'sc:index': {
                 category: 'meta',
-                description: 'Command catalog browsing and discovery',
-                flags: ['--search', '--category', '--help', '--examples'],
-                personas: ['mentor', 'analyzer'],
+                description: 'Command catalog browsing and intelligent discovery',
+                flags: ['--search', '--category', '--help', '--examples', '--interactive'],
+                agents: ['socratic-mentor', 'root-cause-analyst'],
                 mcpRequired: ['sequential'],
                 complexity: 'low',
-                autoFlags: {
-                    search: ['--search', '--examples'],
-                    browse: ['--category', '--help'],
-                    help: ['--help', '--examples']
-                }
+                priority: 'RECOMMENDED'
             },
-            'sc:load': {
+            'sc:select-tool': {
                 category: 'meta',
-                description: 'Project context loading and configuration',
-                flags: ['--persona', '--config', '--template', '--workflow'],
-                personas: ['analyzer', 'architect', 'scribe'],
-                mcpRequired: ['sequential'],
+                description: 'Intelligent tool selection and optimization guidance',
+                flags: ['--task', '--optimize', '--compare', '--recommend'],
+                agents: ['system-architect', 'performance-engineer'],
+                mcpRequired: ['sequential', 'context7'],
                 complexity: 'moderate',
-                autoFlags: {
-                    project: ['--config', '--workflow'],
-                    template: ['--template', '--persona'],
-                    setup: ['--persona', '--config', '--workflow']
-                }
+                priority: 'RECOMMENDED'
             }
         };
 
         Object.entries(commands).forEach(([name, config]) => {
             this.config.commands.set(name, {
                 ...config,
-                usage: this.generateUsageExample(name, config)
+                usage: this.generateUsageExample(name, config),
+                namespace: 'sc',
+                version: FRAMEWORK_VERSION
             });
         });
+
+        console.error(`[INFO] Loaded ${this.config.commands.size} SuperClaude v4.0.8 commands`);
     }
 
-    async loadPersonas() {
-        // Gemini persona system with behavioral patterns
-        const personas = {
-            architect: {
-                identity: 'Systems architect | Long-term thinking | Scalability expert',
-                coreBeliefs: ['Systems evolve, design for change', 'Patterns over implementations'],
-                primaryQuestion: 'How will this scale and evolve?',
-                mcpPreferences: ['sequential', 'context7'],
+    async loadV4Agents() {
+        // SuperClaude Framework v4.0.8 - 14 specialized agents
+        const agents = {
+            'system-architect': {
+                identity: 'System architecture specialist | Scalability expert | Long-term technical strategist',
+                coreBeliefs: ['Design for 10x growth', 'Clear boundaries enable evolution'],
+                primaryQuestion: 'How will this scale and adapt over time?',
+                mcpPreferences: ['sequential', 'context7', 'serena'],
                 thinkingMode: 'systematic',
-                autoTriggers: ['architecture', 'design', 'scalability', 'patterns'],
-                commandSpecialization: ['sc:build', 'sc:analyze', 'sc:workflow'],
-                tokenOptimization: 'balanced',
+                autoTriggers: ['architecture', 'design', 'scalability', 'patterns', 'system'],
+                commandSpecialization: ['sc:build', 'sc:analyze', 'sc:design', 'sc:workflow'],
+                tools: ['Read', 'Grep', 'Glob', 'Write', 'Bash'],
                 behaviorModifiers: {
                     verbosity: 'detailed',
                     focus: 'long-term',
                     riskTolerance: 'conservative'
                 }
             },
-            frontend: {
-                identity: 'Frontend engineer | UX advocate | Performance optimizer',
-                coreBeliefs: ['User experience is paramount', 'Performance is a feature'],
-                primaryQuestion: 'How does this feel to use?',
-                mcpPreferences: ['magic', 'playwright'],
+            'frontend-architect': {
+                identity: 'Frontend architecture specialist | UX-driven engineer | Performance optimizer',
+                coreBeliefs: ['User experience drives technical decisions', 'Performance is accessibility'],
+                primaryQuestion: 'How does this enhance user experience and accessibility?',
+                mcpPreferences: ['magic', 'playwright', 'context7'],
                 thinkingMode: 'user-centric',
-                autoTriggers: ['component', 'ui', 'responsive', 'accessibility'],
-                commandSpecialization: ['sc:build', 'sc:implement', 'sc:test'],
-                tokenOptimization: 'visual',
+                autoTriggers: ['component', 'ui', 'responsive', 'accessibility', 'frontend'],
+                commandSpecialization: ['sc:build', 'sc:implement', 'sc:test', 'sc:design'],
+                tools: ['Read', 'Write', 'Edit', 'MultiEdit', 'Bash'],
                 behaviorModifiers: {
                     verbosity: 'practical',
                     focus: 'user-experience',
                     riskTolerance: 'moderate'
                 }
             },
-            backend: {
-                identity: 'Backend engineer | API specialist | Data architect',
-                coreBeliefs: ['Data integrity above all', 'APIs are contracts'],
-                primaryQuestion: 'How does data flow through this system?',
-                mcpPreferences: ['context7', 'sequential'],
+            'backend-architect': {
+                identity: 'Backend architecture specialist | API design expert | Data systems architect',
+                coreBeliefs: ['Data integrity is paramount', 'APIs are contracts between systems'],
+                primaryQuestion: 'How does data flow reliably through this system?',
+                mcpPreferences: ['context7', 'sequential', 'serena'],
                 thinkingMode: 'data-driven',
-                autoTriggers: ['api', 'database', 'service', 'integration'],
-                commandSpecialization: ['sc:implement', 'sc:analyze', 'sc:troubleshoot'],
-                tokenOptimization: 'technical',
+                autoTriggers: ['api', 'database', 'service', 'integration', 'backend'],
+                commandSpecialization: ['sc:implement', 'sc:analyze', 'sc:troubleshoot', 'sc:design'],
+                tools: ['Read', 'Write', 'Edit', 'MultiEdit', 'Bash', 'Grep'],
                 behaviorModifiers: {
                     verbosity: 'precise',
                     focus: 'reliability',
                     riskTolerance: 'conservative'
                 }
             },
-            analyzer: {
-                identity: 'Root cause specialist | Evidence-based investigator',
-                coreBeliefs: ['Evidence over assumptions', 'Systematic investigation'],
-                primaryQuestion: 'What does the evidence tell us?',
-                mcpPreferences: ['sequential'],
-                thinkingMode: 'analytical',
-                autoTriggers: ['debug', 'investigate', 'analyze', 'troubleshoot'],
-                commandSpecialization: ['sc:analyze', 'sc:troubleshoot'],
-                tokenOptimization: 'detailed',
+            'devops-architect': {
+                identity: 'DevOps infrastructure specialist | Automation expert | Reliability engineer',
+                coreBeliefs: ['Automate everything that can be automated', 'Observability enables reliability'],
+                primaryQuestion: 'How can we automate and monitor this reliably?',
+                mcpPreferences: ['sequential', 'context7'],
+                thinkingMode: 'automation-focused',
+                autoTriggers: ['deploy', 'infrastructure', 'automation', 'monitoring', 'devops'],
+                commandSpecialization: ['sc:workflow', 'sc:spawn', 'sc:git'],
+                tools: ['Read', 'Write', 'Edit', 'Bash'],
+                behaviorModifiers: {
+                    verbosity: 'operational',
+                    focus: 'reliability',
+                    riskTolerance: 'measured'
+                }
+            },
+            'security-engineer': {
+                identity: 'Security architecture specialist | Threat modeling expert | Compliance guardian',
+                coreBeliefs: ['Security by design, not as afterthought', 'Zero trust, verify everything'],
+                primaryQuestion: 'What are the attack vectors and mitigation strategies?',
+                mcpPreferences: ['sequential', 'context7'],
+                thinkingMode: 'threat-focused',
+                autoTriggers: ['security', 'vulnerability', 'auth', 'compliance', 'threat'],
+                commandSpecialization: ['sc:analyze', 'sc:improve', 'sc:troubleshoot'],
+                tools: ['Read', 'Grep', 'Glob', 'Bash', 'Write'],
+                behaviorModifiers: {
+                    verbosity: 'comprehensive',
+                    focus: 'security-first',
+                    riskTolerance: 'paranoid'
+                }
+            },
+            'performance-engineer': {
+                identity: 'Performance optimization specialist | Bottleneck elimination expert',
+                coreBeliefs: ['Measure before optimizing', 'Bottlenecks migrate when addressed'],
+                primaryQuestion: 'Where are the performance bottlenecks and how do we eliminate them?',
+                mcpPreferences: ['sequential', 'context7'],
+                thinkingMode: 'measurement-driven',
+                autoTriggers: ['performance', 'optimization', 'bottleneck', 'scale', 'speed'],
+                commandSpecialization: ['sc:analyze', 'sc:improve', 'sc:troubleshoot'],
+                tools: ['Read', 'Grep', 'Glob', 'Bash', 'Write'],
+                behaviorModifiers: {
+                    verbosity: 'data-driven',
+                    focus: 'optimization',
+                    riskTolerance: 'measured'
+                }
+            },
+            'quality-engineer': {
+                identity: 'Quality assurance specialist | Testing strategist | Edge case detective',
+                coreBeliefs: ['Quality is built in, not tested in', 'Edge cases reveal system truth'],
+                primaryQuestion: 'How do we ensure comprehensive quality and catch edge cases?',
+                mcpPreferences: ['playwright', 'sequential'],
+                thinkingMode: 'systematic-validation',
+                autoTriggers: ['test', 'quality', 'edge-case', 'validation', 'qa'],
+                commandSpecialization: ['sc:test', 'sc:improve', 'sc:analyze'],
+                tools: ['Read', 'Write', 'Bash', 'Grep'],
+                behaviorModifiers: {
+                    verbosity: 'thorough',
+                    focus: 'quality-assurance',
+                    riskTolerance: 'conservative'
+                }
+            },
+            'refactoring-expert': {
+                identity: 'Code quality specialist | Technical debt manager | Clean code advocate',
+                coreBeliefs: ['Simplicity over complexity', 'Code should tell a story'],
+                primaryQuestion: 'How can this be simpler, cleaner, and more maintainable?',
+                mcpPreferences: ['morphllm', 'sequential'],
+                thinkingMode: 'simplification-focused',
+                autoTriggers: ['refactor', 'cleanup', 'debt', 'simplify', 'clean'],
+                commandSpecialization: ['sc:improve', 'sc:cleanup'],
+                tools: ['Read', 'Edit', 'MultiEdit', 'Grep', 'Write', 'Bash'],
+                behaviorModifiers: {
+                    verbosity: 'concise',
+                    focus: 'maintainability',
+                    riskTolerance: 'moderate'
+                }
+            },
+            'root-cause-analyst': {
+                identity: 'Problem investigation specialist | Evidence-based diagnostician',
+                coreBeliefs: ['Evidence over assumptions', 'Symptoms point to root causes'],
+                primaryQuestion: 'What does the evidence tell us about the underlying problem?',
+                mcpPreferences: ['sequential', 'serena'],
+                thinkingMode: 'investigative',
+                autoTriggers: ['debug', 'investigate', 'analyze', 'troubleshoot', 'root-cause'],
+                commandSpecialization: ['sc:analyze', 'sc:troubleshoot', 'sc:brainstorm'],
+                tools: ['Read', 'Grep', 'Glob', 'Bash', 'Write'],
                 behaviorModifiers: {
                     verbosity: 'comprehensive',
                     focus: 'root-cause',
                     riskTolerance: 'evidence-based'
                 }
             },
-            security: {
-                identity: 'Security engineer | Threat modeler | Compliance specialist',
-                coreBeliefs: ['Security by design', 'Zero trust architecture'],
-                primaryQuestion: 'What are the attack vectors?',
-                mcpPreferences: ['sequential', 'context7'],
-                thinkingMode: 'threat-focused',
-                autoTriggers: ['security', 'vulnerability', 'auth', 'compliance'],
-                commandSpecialization: ['sc:analyze', 'sc:improve'],
-                tokenOptimization: 'security-focused',
+            'requirements-analyst': {
+                identity: 'Requirements discovery specialist | Ambiguity resolver | Specification architect',
+                coreBeliefs: ['Clear requirements prevent scope creep', 'Ambiguity is the enemy of success'],
+                primaryQuestion: 'What are we really trying to achieve and why?',
+                mcpPreferences: ['sequential', 'serena'],
+                thinkingMode: 'discovery-focused',
+                autoTriggers: ['requirements', 'specification', 'scope', 'estimate', 'planning'],
+                commandSpecialization: ['sc:brainstorm', 'sc:estimate', 'sc:analyze'],
+                tools: ['Read', 'Write', 'Edit', 'TodoWrite', 'Grep', 'Bash'],
                 behaviorModifiers: {
-                    verbosity: 'detailed',
-                    focus: 'security-first',
-                    riskTolerance: 'paranoid'
+                    verbosity: 'structured',
+                    focus: 'clarity',
+                    riskTolerance: 'conservative'
                 }
             },
-            mentor: {
-                identity: 'Knowledge transfer specialist | Educator | Documentation advocate',
-                coreBeliefs: ['Understanding over completion', 'Teaching through methodology'],
-                primaryQuestion: 'How can I help you understand and learn?',
+            'python-expert': {
+                identity: 'Python architecture specialist | Performance optimizer | Best practices guardian',
+                coreBeliefs: ['Pythonic is readable and efficient', 'Type hints prevent future pain'],
+                primaryQuestion: 'How can this be more Pythonic, performant, and maintainable?',
+                mcpPreferences: ['context7', 'sequential'],
+                thinkingMode: 'pythonic-focused',
+                autoTriggers: ['python', 'django', 'flask', 'fastapi', 'pandas'],
+                commandSpecialization: ['sc:implement', 'sc:improve', 'sc:analyze'],
+                tools: ['Read', 'Write', 'Edit', 'MultiEdit', 'Bash', 'Grep'],
+                behaviorModifiers: {
+                    verbosity: 'practical',
+                    focus: 'python-excellence',
+                    riskTolerance: 'moderate'
+                }
+            },
+            'socratic-mentor': {
+                identity: 'Educational guide | Knowledge transfer specialist | Learning facilitator',
+                coreBeliefs: ['Understanding over completion', 'Questions unlock deeper learning'],
+                primaryQuestion: 'How can I guide discovery rather than provide answers?',
                 mcpPreferences: ['context7', 'sequential'],
                 thinkingMode: 'educational',
-                autoTriggers: ['learn', 'explain', 'understand', 'guide', 'teach'],
+                autoTriggers: ['learn', 'explain', 'understand', 'guide', 'teach', 'mentor'],
                 commandSpecialization: ['sc:explain', 'sc:document', 'sc:index'],
-                tokenOptimization: 'clarity-focused',
+                tools: ['Read', 'Write', 'Grep', 'Bash'],
                 behaviorModifiers: {
-                    verbosity: 'comprehensive',
+                    verbosity: 'guided',
                     focus: 'understanding',
                     riskTolerance: 'conservative'
                 }
             },
-            refactorer: {
-                identity: 'Code quality specialist | Technical debt manager | Clean code advocate',
-                coreBeliefs: ['Simplicity over complexity', 'Maintainability is paramount'],
-                primaryQuestion: 'How can this be simpler and cleaner?',
-                mcpPreferences: ['sequential'],
-                thinkingMode: 'quality-focused',
-                autoTriggers: ['refactor', 'cleanup', 'simplify', 'technical debt', 'improve quality'],
-                commandSpecialization: ['sc:improve', 'sc:cleanup'],
-                tokenOptimization: 'efficiency-focused',
+            'learning-guide': {
+                identity: 'Programming education specialist | Concept simplification expert',
+                coreBeliefs: ['Complex concepts need simple explanations', 'Practice builds expertise'],
+                primaryQuestion: 'How can this be learned most effectively?',
+                mcpPreferences: ['context7', 'sequential'],
+                thinkingMode: 'pedagogical',
+                autoTriggers: ['tutorial', 'beginner', 'example', 'practice', 'learning'],
+                commandSpecialization: ['sc:explain', 'sc:document'],
+                tools: ['Read', 'Write', 'Grep', 'Bash'],
                 behaviorModifiers: {
-                    verbosity: 'practical',
-                    focus: 'code-quality',
-                    riskTolerance: 'moderate'
+                    verbosity: 'instructional',
+                    focus: 'learning-effectiveness',
+                    riskTolerance: 'supportive'
                 }
             },
-            performance: {
-                identity: 'Optimization specialist | Bottleneck elimination expert | Metrics-driven analyst',
-                coreBeliefs: ['Measure first, optimize second', 'User experience drives performance'],
-                primaryQuestion: 'Where are the bottlenecks and how do we measure improvement?',
-                mcpPreferences: ['playwright', 'sequential'],
-                thinkingMode: 'metrics-driven',
-                autoTriggers: ['optimize', 'performance', 'speed', 'bottleneck', 'latency'],
-                commandSpecialization: ['sc:analyze', 'sc:improve', 'sc:test'],
-                tokenOptimization: 'data-focused',
-                behaviorModifiers: {
-                    verbosity: 'evidence-based',
-                    focus: 'performance',
-                    riskTolerance: 'data-driven'
-                }
-            },
-            qa: {
-                identity: 'Quality advocate | Testing specialist | Edge case detective',
-                coreBeliefs: ['Prevention over correction', 'Comprehensive coverage is essential'],
-                primaryQuestion: 'What could go wrong and how do we prevent it?',
-                mcpPreferences: ['playwright', 'sequential'],
-                thinkingMode: 'prevention-focused',
-                autoTriggers: ['test', 'quality', 'validation', 'edge case', 'coverage'],
-                commandSpecialization: ['sc:test', 'sc:troubleshoot', 'sc:analyze'],
-                tokenOptimization: 'thorough',
+            'technical-writer': {
+                identity: 'Documentation specialist | Technical communication expert | Clarity advocate',
+                coreBeliefs: ['Documentation is user interface for code', 'Clarity serves everyone'],
+                primaryQuestion: 'How can this be documented most clearly and usefully?',
+                mcpPreferences: ['context7', 'serena'],
+                thinkingMode: 'communication-focused',
+                autoTriggers: ['document', 'readme', 'api-docs', 'guide', 'documentation'],
+                commandSpecialization: ['sc:document', 'sc:explain', 'sc:save'],
+                tools: ['Read', 'Write', 'Edit', 'TodoWrite', 'Bash'],
                 behaviorModifiers: {
                     verbosity: 'comprehensive',
-                    focus: 'quality-assurance',
-                    riskTolerance: 'paranoid'
-                }
-            },
-            devops: {
-                identity: 'Infrastructure specialist | Deployment expert | Reliability engineer',
-                coreBeliefs: ['Automation over manual processes', 'Observability by default'],
-                primaryQuestion: 'How do we deploy and monitor this reliably?',
-                mcpPreferences: ['sequential', 'context7'],
-                thinkingMode: 'operations-focused',
-                autoTriggers: ['deploy', 'infrastructure', 'automation', 'ci/cd', 'monitoring'],
-                commandSpecialization: ['sc:git', 'sc:workflow', 'sc:task'],
-                tokenOptimization: 'efficiency-focused',
-                behaviorModifiers: {
-                    verbosity: 'practical',
-                    focus: 'operational-excellence',
-                    riskTolerance: 'conservative'
-                }
-            },
-            scribe: {
-                identity: 'Professional writer | Documentation specialist | Communication expert',
-                coreBeliefs: ['Clarity over brevity', 'Audience-first communication'],
-                primaryQuestion: 'How can I communicate this most effectively?',
-                mcpPreferences: ['context7', 'sequential'],
-                thinkingMode: 'communication-focused',
-                autoTriggers: ['document', 'write', 'explain', 'guide', 'communication'],
-                commandSpecialization: ['sc:document', 'sc:explain', 'sc:git'],
-                tokenOptimization: 'clarity-focused',
-                behaviorModifiers: {
-                    verbosity: 'detailed',
-                    focus: 'communication',
+                    focus: 'accessibility',
                     riskTolerance: 'conservative'
                 }
             }
         };
 
-        Object.entries(personas).forEach(([name, config]) => {
-            this.config.personas.set(name, config);
+        Object.entries(agents).forEach(([name, config]) => {
+            this.config.agents.set(name, {
+                ...config,
+                version: FRAMEWORK_VERSION,
+                capabilities: this.generateAgentCapabilities(config)
+            });
         });
+
+        console.error(`[INFO] Loaded ${this.config.agents.size} SuperClaude v4.0.8 specialized agents`);
     }
 
-    async setupIntelligentRouting() {
-        // Intelligent routing rules for automatic persona and flag selection
-        const routingRules = {
-            // Context-based persona activation
-            personaRouting: {
-                'ui|component|frontend|react|vue': 'frontend',
-                'api|backend|server|database': 'backend', 
-                'architecture|design|system|scalability': 'architect',
-                'debug|troubleshoot|error|investigate': 'analyzer',
-                'security|vulnerability|auth|compliance': 'security',
-                'learn|explain|understand|guide|teach': 'mentor',
-                'refactor|cleanup|simplify|technical debt|improve quality': 'refactorer',
-                'optimize|performance|speed|bottleneck|latency': 'performance',
-                'test|quality|validation|edge case|coverage': 'qa',
-                'deploy|infrastructure|automation|ci/cd|monitoring': 'devops',
-                'document|write|guide|communication': 'scribe'
+    async loadBehavioralModes() {
+        // SuperClaude Framework v4.0.8 - 5 behavioral modes
+        const modes = {
+            brainstorming: {
+                name: 'Brainstorming Mode',
+                description: 'Collaborative discovery mindset for requirements exploration',
+                triggers: ['vague requests', 'exploration keywords', 'uncertainty indicators'],
+                behaviors: ['socratic dialogue', 'non-presumptive', 'collaborative exploration']
             },
-            
-            // Automatic flag inference
-            flagRouting: {
-                'test|testing|tdd': ['--tdd', '--coverage'],
-                'ui|component|interface': ['--magic'],
-                'complex|large|comprehensive': ['--wave'],
-                'security|secure|vulnerability': ['--security'],
-                'performance|optimize|speed': ['--performance']
+            introspection: {
+                name: 'Introspection Mode', 
+                description: 'Meta-cognitive analysis for reasoning optimization',
+                triggers: ['self-analysis requests', 'error recovery', 'complex problem solving'],
+                behaviors: ['self-examination', 'transparency', 'pattern detection']
             },
-            
-            // MCP server activation rules
-            mcpRouting: {
-                'ui|component|design': ['magic'],
-                'documentation|docs|api': ['context7'],
-                'complex|analysis|thinking': ['sequential'],
-                'testing|e2e|automation': ['playwright']
+            orchestration: {
+                name: 'Orchestration Mode',
+                description: 'Intelligent tool selection for optimal task routing',
+                triggers: ['multi-tool operations', 'performance constraints', 'parallel execution'],
+                behaviors: ['smart tool selection', 'resource awareness', 'parallel thinking']
+            },
+            task_management: {
+                name: 'Task Management Mode',
+                description: 'Hierarchical organization with persistent memory',
+                triggers: ['>3 steps', 'multiple directories', 'complex dependencies'],
+                behaviors: ['hierarchical organization', 'cross-session persistence', 'memory operations']
+            },
+            token_efficiency: {
+                name: 'Token Efficiency Mode',
+                description: 'Symbol-enhanced communication for compressed clarity',
+                triggers: ['context usage >75%', 'large-scale operations', '--uc flag'],
+                behaviors: ['symbol communication', 'abbreviation systems', '30-50% compression']
             }
         };
 
-        this.config.routingRules = routingRules;
+        Object.entries(modes).forEach(([name, config]) => {
+            this.config.behavioralModes.set(name, config);
+        });
+
+        console.error(`[INFO] Loaded ${this.config.behavioralModes.size} behavioral modes`);
     }
 
-    async initializeMCPIntegrations() {
-        // Mock MCP server configurations - in production would connect to real servers
+    async loadPriorityRules() {
+        // SuperClaude Framework v4.0.8 Priority-based rule system
+        const rules = {
+            CRITICAL: {
+                priority: 1,
+                description: 'Security, data safety, production breaks - Never compromise',
+                examples: ['sc:troubleshoot', 'sc:load', 'sc:save'],
+                enforcement: 'always_win'
+            },
+            IMPORTANT: {
+                priority: 2,
+                description: 'Quality, maintainability, professionalism - Strong preference',
+                examples: ['sc:build', 'sc:implement', 'sc:analyze'],
+                enforcement: 'strong_preference'
+            },
+            RECOMMENDED: {
+                priority: 3,
+                description: 'Optimization, style, best practices - Apply when practical',
+                examples: ['sc:cleanup', 'sc:explain', 'sc:index'],
+                enforcement: 'when_practical'
+            }
+        };
+
+        Object.entries(rules).forEach(([name, config]) => {
+            this.state.priorityRules.set(name, config);
+        });
+
+        console.error('[INFO] Loaded priority-based rule system');
+    }
+
+    async setupEnhancedRouting() {
+        // Enhanced routing logic for v4.0.8
+        this.routingEngine = {
+            analyzeContext: (input) => {
+                const context = {
+                    command: this.extractCommand(input),
+                    flags: this.extractFlags(input),
+                    complexity: this.assessComplexity(input),
+                    domain: this.identifyDomain(input),
+                    mcpNeeds: this.identifyMCPNeeds(input)
+                };
+                return context;
+            },
+            
+            selectAgent: (context) => {
+                // Intelligent agent selection based on context
+                for (const [agentName, agent] of this.config.agents) {
+                    if (this.matchesAgentTriggers(context, agent)) {
+                        return agentName;
+                    }
+                }
+                return 'system-architect'; // Default fallback
+            },
+
+            routeMCP: (context, agents) => {
+                // Route to appropriate MCP servers
+                const mcpServers = new Set();
+                
+                if (context.command) {
+                    const cmd = this.config.commands.get(context.command);
+                    if (cmd?.mcpRequired) {
+                        cmd.mcpRequired.forEach(mcp => mcpServers.add(mcp));
+                    }
+                }
+
+                agents.forEach(agentName => {
+                    const agent = this.config.agents.get(agentName);
+                    if (agent?.mcpPreferences) {
+                        agent.mcpPreferences.forEach(mcp => mcpServers.add(mcp));
+                    }
+                });
+
+                return Array.from(mcpServers);
+            }
+        };
+    }
+
+    async initializeV4MCPIntegrations() {
+        // SuperClaude Framework v4.0.8 - 6 MCP server integrations
         const mcpServers = {
             sequential: {
-                name: 'Sequential Thinking',
-                capabilities: ['complex-analysis', 'multi-step-reasoning'],
-                status: 'available'
+                name: 'Sequential MCP',
+                description: 'Multi-step reasoning engine for complex analysis',
+                capabilities: ['structured-thinking', 'hypothesis-testing', 'systematic-analysis'],
+                triggers: ['complex-debugging', 'architectural-analysis', 'multi-component-issues']
             },
             context7: {
-                name: 'Context7 Documentation',
-                capabilities: ['doc-lookup', 'pattern-matching'],
-                status: 'available'
+                name: 'Context7 MCP',
+                description: 'Official library documentation and framework guidance',
+                capabilities: ['documentation-lookup', 'framework-patterns', 'best-practices'],
+                triggers: ['import-statements', 'framework-questions', 'official-docs']
             },
             magic: {
-                name: 'Magic UI Generation',
-                capabilities: ['component-gen', 'ui-design'],
-                status: 'available'
+                name: 'Magic MCP',
+                description: 'Modern UI component generation from 21st.dev patterns',
+                capabilities: ['ui-generation', 'design-system', 'accessibility'],
+                triggers: ['ui-components', 'design-system', 'frontend-development']
             },
             playwright: {
-                name: 'Playwright Testing',
-                capabilities: ['e2e-testing', 'automation'],
-                status: 'available'
+                name: 'Playwright MCP',
+                description: 'Browser automation and E2E testing',
+                capabilities: ['browser-automation', 'e2e-testing', 'visual-validation'],
+                triggers: ['browser-testing', 'e2e-scenarios', 'visual-testing']
+            },
+            morphllm: {
+                name: 'Morphllm MCP', 
+                description: 'Pattern-based code editing with token optimization',
+                capabilities: ['bulk-transformations', 'pattern-edits', 'token-efficiency'],
+                triggers: ['multi-file-edits', 'pattern-transformations', 'bulk-operations']
+            },
+            serena: {
+                name: 'Serena MCP',
+                description: 'Semantic code understanding with project memory',
+                capabilities: ['semantic-analysis', 'project-memory', 'cross-session-persistence'],
+                triggers: ['symbol-operations', 'project-navigation', 'session-management']
             }
         };
 
         Object.entries(mcpServers).forEach(([name, config]) => {
             this.config.mcpServers.set(name, config);
         });
+
+        console.error(`[INFO] Initialized ${this.config.mcpServers.size} MCP server integrations`);
     }
 
     setupRequestHandlers() {
-        this.server.setRequestHandler(ListToolsRequestSchema, async () => ({
-            tools: this.generateToolsList(),
-        }));
+        this.server.setRequestHandler(ListToolsRequestSchema, async () => {
+            const tools = [];
+            
+            // Generate tools for all 21 commands
+            for (const [commandName, commandConfig] of this.config.commands) {
+                tools.push({
+                    name: commandName,
+                    description: `${commandConfig.description} (Category: ${commandConfig.category}, Priority: ${commandConfig.priority})`,
+                    inputSchema: {
+                        type: "object",
+                        properties: {
+                            input: {
+                                type: "string",
+                                description: `SuperClaude v${FRAMEWORK_VERSION} command input with optional flags: ${commandConfig.flags?.join(', ') || 'none'}`
+                            },
+                            flags: {
+                                type: "array",
+                                items: { type: "string" },
+                                description: `Available flags: ${commandConfig.flags?.join(', ') || 'none'}`
+                            },
+                            agent: {
+                                type: "string", 
+                                description: `Preferred agent: ${commandConfig.agents?.join(', ') || 'auto-select'}`
+                            }
+                        },
+                        required: ["input"]
+                    }
+                });
+            }
+
+            return { tools };
+        });
 
         this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
             const { name, arguments: args } = request.params;
-            return await this.executeTool(name, args);
+            
+            try {
+                return await this.executeCommand(name, args);
+            } catch (error) {
+                console.error(`[ERROR] Command execution failed: ${error.message}`);
+                return {
+                    content: [
+                        {
+                            type: "text",
+                            text: `Error executing ${name}: ${error.message}`
+                        }
+                    ]
+                };
+            }
         });
-    }
-
-    generateToolsList() {
-        const tools = [];
-
-        // Generate command tools with intelligent schemas
-        for (const [name, config] of this.config.commands) {
-            tools.push({
-                name,
-                description: `${config.description} | Personas: ${config.personas.join(', ')} | Complexity: ${config.complexity}`,
-                inputSchema: {
-                    type: 'object',
-                    properties: {
-                        args: {
-                            type: 'string',
-                            description: 'Command arguments and target specification'
-                        },
-                        persona: {
-                            type: 'string',
-                            enum: Array.from(this.config.personas.keys()),
-                            description: 'Persona to use (auto-detected if not specified)'
-                        },
-                        flags: {
-                            type: 'array',
-                            items: {
-                                type: 'string',
-                                enum: config.flags
-                            },
-                            description: 'Command flags (auto-inferred if not specified)'
-                        },
-                        auto_route: {
-                            type: 'boolean',
-                            default: true,
-                            description: 'Enable intelligent routing and auto-detection'
-                        },
-                        context: {
-                            type: 'object',
-                            description: 'Additional context for intelligent routing',
-                            properties: {
-                                project_type: { type: 'string' },
-                                complexity: { type: 'string', enum: ['low', 'moderate', 'high'] },
-                                focus_areas: { type: 'array', items: { type: 'string' } }
-                            }
-                        }
-                    },
-                    required: ['args']
-                }
-            });
-        }
-
-        // Add utility tools
-        tools.push(
-            {
-                name: 'sc:persona',
-                description: 'Switch or query active SuperClaude persona with behavioral adaptation',
-                inputSchema: {
-                    type: 'object',
-                    properties: {
-                        action: {
-                            type: 'string',
-                            enum: ['switch', 'query', 'list', 'auto'],
-                            description: 'Persona management action'
-                        },
-                        name: {
-                            type: 'string',
-                            enum: Array.from(this.config.personas.keys()),
-                            description: 'Persona name'
-                        },
-                        context: {
-                            type: 'string', 
-                            description: 'Context for auto persona selection'
-                        }
-                    },
-                    required: ['action']
-                }
-            },
-            {
-                name: 'sc:mcp',
-                description: 'Manage MCP server integrations and routing',
-                inputSchema: {
-                    type: 'object',
-                    properties: {
-                        action: {
-                            type: 'string',
-                            enum: ['status', 'enable', 'disable', 'route'],
-                            description: 'MCP management action'
-                        },
-                        servers: {
-                            type: 'array',
-                            items: {
-                                type: 'string',
-                                enum: Array.from(this.config.mcpServers.keys())
-                            },
-                            description: 'Target MCP servers'
-                        }
-                    },
-                    required: ['action']
-                }
-            },
-            {
-                name: 'sc:optimize',
-                description: 'Configure token optimization and efficiency settings',
-                inputSchema: {
-                    type: 'object',
-                    properties: {
-                        mode: {
-                            type: 'string',
-                            enum: ['normal', 'compressed', 'ultracompressed', 'adaptive'],
-                            description: 'Token optimization mode'
-                        },
-                        context_aware: {
-                            type: 'boolean',
-                            default: true,
-                            description: 'Enable context-aware optimization'
-                        }
-                    },
-                    required: ['mode']
-                }
-            }
-        );
-
-        return tools;
-    }
-
-    async executeTool(name, args) {
-        try {
-            // Log command execution for routing analysis
-            this.state.routingHistory.push({
-                command: name,
-                timestamp: Date.now(),
-                args: args
-            });
-
-            // Route to appropriate handler
-            if (name.startsWith('sc:')) {
-                if (['sc:persona', 'sc:mcp', 'sc:optimize'].includes(name)) {
-                    return await this.executeUtilityTool(name, args);
-                } else {
-                    return await this.executeCommand(name, args);
-                }
-            }
-
-            throw new Error(`Unknown tool: ${name}`);
-        } catch (error) {
-            return {
-                content: [
-                    {
-                        type: 'text',
-                        text: `❌ Error executing ${name}: ${error.message}\n\nTip: Use 'sc:persona list' to see available personas or check command syntax.`
-                    }
-                ]
-            };
-        }
     }
 
     async executeCommand(commandName, args) {
@@ -715,385 +795,136 @@ class GeminiSuperClaudeMCPServer {
             throw new Error(`Unknown command: ${commandName}`);
         }
 
-        // Apply intelligent routing
-        const routingContext = await this.applyIntelligentRouting(commandName, args);
-        
-        // Execute command with intelligent context
-        const response = await this.generateGeminiResponse(commandName, command, routingContext);
+        // Analyze context and route appropriately
+        const context = this.routingEngine.analyzeContext(args.input || '');
+        const selectedAgent = this.routingEngine.selectAgent(context);
+        const requiredMCP = this.routingEngine.routeMCP(context, [selectedAgent]);
 
         // Update state
-        this.state.lastCommand = { name: commandName, context: routingContext };
+        this.state.activeAgent = selectedAgent;
+        this.state.lastCommand = commandName;
+        this.state.routingHistory.push({
+            timestamp: new Date().toISOString(),
+            command: commandName,
+            agent: selectedAgent,
+            mcp: requiredMCP,
+            context: context
+        });
+
+        const response = await this.generateCommandResponse(command, args, selectedAgent, requiredMCP);
+        
+        console.error(`[INFO] Executed ${commandName} via ${selectedAgent} agent with MCP: ${requiredMCP.join(', ')}`);
         
         return {
             content: [
                 {
-                    type: 'text',
+                    type: "text", 
                     text: response
                 }
             ]
         };
     }
 
-    async applyIntelligentRouting(commandName, args) {
-        const context = {
-            originalArgs: args,
-            detectedPersona: null,
-            suggestedFlags: [],
-            mcpServers: [],
-            confidence: 0
-        };
-
-        if (!args.auto_route) {
-            return context;
-        }
-
-        const searchText = (args.context?.focus_areas?.join(' ') || '') + ' ' + (args.args || '');
+    async generateCommandResponse(command, args, agent, mcpServers) {
+        const agentConfig = this.config.agents.get(agent);
         
-        // Persona detection
-        if (!args.persona) {
-            for (const [pattern, persona] of Object.entries(this.config.routingRules.personaRouting)) {
-                const regex = new RegExp(pattern, 'i');
-                if (regex.test(searchText)) {
-                    context.detectedPersona = persona;
-                    context.confidence += 0.3;
-                    break;
-                }
-            }
-        }
-
-        // Flag inference  
-        if (!args.flags || args.flags.length === 0) {
-            for (const [pattern, flags] of Object.entries(this.config.routingRules.flagRouting)) {
-                const regex = new RegExp(pattern, 'i');
-                if (regex.test(searchText)) {
-                    context.suggestedFlags.push(...flags);
-                    context.confidence += 0.2;
-                }
-            }
-        }
-
-        // MCP server routing
-        for (const [pattern, servers] of Object.entries(this.config.routingRules.mcpRouting)) {
-            const regex = new RegExp(pattern, 'i');
-            if (regex.test(searchText)) {
-                context.mcpServers.push(...servers);
-                context.confidence += 0.1;
-            }
-        }
-
-        return context;
-    }
-
-    async generateGeminiResponse(commandName, command, routingContext) {
-        const activePersona = routingContext.detectedPersona || this.state.activePersona;
-        const persona = activePersona ? this.config.personas.get(activePersona) : null;
-
-        let response = `🚀 **${commandName}** | SuperClaude Framework v3+\n\n`;
-
-        // Routing intelligence feedback
-        if (routingContext.confidence > 0.5) {
-            response += `🧠 **Intelligent Routing** (Confidence: ${Math.round(routingContext.confidence * 100)}%)\n`;
-            if (routingContext.detectedPersona) {
-                response += `👤 Auto-detected persona: **${routingContext.detectedPersona}**\n`;
-            }
-            if (routingContext.suggestedFlags.length > 0) {
-                response += `🚩 Suggested flags: ${routingContext.suggestedFlags.join(', ')}\n`;
-            }
-            if (routingContext.mcpServers.length > 0) {
-                response += `🔗 MCP integrations: ${routingContext.mcpServers.map(s => this.config.mcpServers.get(s)?.name || s).join(', ')}\n`;
-            }
-            response += '\n';
-        }
-
-        // Persona context
-        if (persona) {
-            response += `👤 **Active Persona**: ${activePersona}\n`;
-            response += `🎯 **Focus**: ${persona.primaryQuestion}\n`;
-            response += `🧠 **Thinking Mode**: ${persona.thinkingMode}\n\n`;
-        }
-
-        // Command execution context
-        response += `📋 **Command**: ${commandName}\n`;
-        response += `📝 **Target**: ${routingContext.originalArgs.args}\n`;
-        response += `🔧 **Category**: ${command.category}\n`;
-        response += `⚡ **Complexity**: ${command.complexity}\n\n`;
-
-        // Framework integration
-        if (command.mcpRequired.length > 0) {
-            response += `🔗 **Required Integrations**:\n`;
-            command.mcpRequired.forEach(server => {
-                const serverInfo = this.config.mcpServers.get(server);
-                response += `  • ${serverInfo?.name || server} (${serverInfo?.status || 'unknown'})\n`;
-            });
-            response += '\n';
-        }
-
-        // Execution plan
-        response += `📋 **Execution Plan**:\n`;
-        response += this.generateExecutionPlan(commandName, command, routingContext);
-
-        // Next steps
-        response += `\n🎯 **Next Steps**:\n`;
-        response += `1. Review routing suggestions and confirm approach\n`;
-        response += `2. Execute command with selected persona and flags\n`;
-        response += `3. Validate results and iterate if needed\n`;
+        let response = `# ${command.description}\n\n`;
+        response += `**Framework**: SuperClaude v${FRAMEWORK_VERSION}\n`;
+        response += `**Agent**: ${agentConfig.identity}\n`;
+        response += `**MCP Integration**: ${mcpServers.join(', ')}\n`;
+        response += `**Priority**: ${command.priority}\n\n`;
         
-        if (persona) {
-            response += `4. Apply ${persona.identity.split('|')[0].trim()} best practices\n`;
-        }
-
+        response += `## Agent Perspective\n`;
+        response += `**Core Belief**: ${agentConfig.coreBeliefs.join(' | ')}\n`;
+        response += `**Primary Question**: ${agentConfig.primaryQuestion}\n\n`;
+        
+        response += `## Execution Framework\n`;
+        response += `1. **Context Analysis**: ${agentConfig.thinkingMode} approach\n`;
+        response += `2. **Tool Coordination**: ${agentConfig.tools.join(', ')}\n`;
+        response += `3. **MCP Integration**: ${agentConfig.mcpPreferences.join(' → ')}\n`;
+        response += `4. **Quality Gates**: ${command.priority} priority enforcement\n\n`;
+        
+        response += `## Implementation Guidance\n`;
+        response += `- **Behavioral Mode**: ${this.state.behavioralMode}\n`;
+        response += `- **Command Flags**: ${args.flags?.join(', ') || 'default'}\n`;
+        response += `- **Auto-Triggers**: ${agentConfig.autoTriggers.join(', ')}\n\n`;
+        
+        response += `## Next Steps\n`;
+        response += `Execute this command in Claude Code with the coordinated agent and MCP server integration for optimal results.\n\n`;
+        response += `*This response was generated by the Gemini SuperClaude MCP Server v${SERVER_VERSION} for framework compatibility.*`;
+        
         return response;
     }
 
-    generateExecutionPlan(commandName, command, context) {
-        const plans = {
-            'sc:build': `1. Analyze project requirements and detect framework\n2. Apply architectural patterns (${context.detectedPersona || 'default'})\n3. Generate scaffold with intelligent defaults\n4. Configure build tools and dependencies\n5. Set up testing framework if --tdd detected`,
-            
-            'sc:implement': `1. Define feature scope and requirements\n2. Select appropriate implementation pattern\n3. Generate code with persona-specific approach\n4. Apply testing strategy based on complexity\n5. Document implementation decisions`,
-            
-            'sc:analyze': `1. Scan codebase for complexity and patterns\n2. Apply multi-dimensional analysis framework\n3. Generate insights using ${context.detectedPersona || 'analyzer'} perspective\n4. Provide evidence-based recommendations\n5. Create improvement roadmap`,
-            
-            'sc:workflow': `1. Define workflow stages and dependencies\n2. Configure orchestration strategy\n3. Set up checkpoints and validation gates\n4. Enable parallel execution where possible\n5. Monitor and optimize workflow performance`,
-
-            'sc:troubleshoot': `1. Gather system state and error information\n2. Apply systematic diagnostic methodology\n3. Identify root causes using evidence\n4. Develop targeted resolution strategy\n5. Validate fixes and prevent recurrence`,
-
-            'sc:improve': `1. Assess current quality and performance metrics\n2. Identify improvement opportunities\n3. Apply ${context.detectedPersona || 'refactorer'} methodology\n4. Implement changes with validation\n5. Measure and document improvements`,
-
-            'sc:test': `1. Define testing strategy and scope\n2. Set up testing environment and tools\n3. Create comprehensive test suites\n4. Execute tests with coverage analysis\n5. Generate quality reports and recommendations`,
-
-            'sc:task': `1. Define task scope and requirements\n2. Break down into manageable components\n3. Set up tracking and milestones\n4. Coordinate resources and dependencies\n5. Monitor progress and adjust as needed`,
-
-            'sc:spawn': `1. Analyze coordination requirements\n2. Select appropriate specialized agents\n3. Define communication protocols\n4. Launch parallel or sequential execution\n5. Aggregate results and provide unified output`,
-
-            'sc:explain': `1. Assess audience knowledge level\n2. Structure explanation for clarity\n3. Use ${context.detectedPersona || 'mentor'} teaching approach\n4. Provide examples and context\n5. Validate understanding and offer follow-up`,
-
-            'sc:document': `1. Analyze documentation requirements\n2. Structure content for target audience\n3. Apply professional writing standards\n4. Include examples and usage patterns\n5. Review for clarity and completeness`,
-
-            'sc:cleanup': `1. Scan for code quality issues\n2. Identify technical debt and improvements\n3. Apply systematic cleanup methodology\n4. Validate changes don't break functionality\n5. Document improvements and patterns`,
-
-            'sc:git': `1. Analyze current repository state\n2. Plan git workflow strategy\n3. Execute version control operations\n4. Apply best practices for collaboration\n5. Document changes and coordinate team`,
-
-            'sc:estimate': `1. Analyze scope and requirements\n2. Assess complexity and risks\n3. Apply ${context.detectedPersona || 'architect'} estimation methodology\n4. Generate detailed breakdown\n5. Provide confidence intervals and recommendations`,
-
-            'sc:design': `1. Analyze design requirements and constraints\n2. Research patterns and best practices\n3. Create systematic design approach\n4. Generate architecture and component designs\n5. Validate design against requirements`,
-
-            'sc:index': `1. Scan available commands and capabilities\n2. Organize by category and complexity\n3. Generate searchable command catalog\n4. Provide usage examples and recommendations\n5. Create navigation and discovery aids`,
-
-            'sc:load': `1. Analyze project structure and context\n2. Load relevant configurations and templates\n3. Set up appropriate personas and workflows\n4. Initialize project-specific settings\n5. Provide setup summary and next steps`,
-            
-            'default': `1. Parse command context and requirements\n2. Apply routing intelligence and persona adaptation\n3. Execute core command logic\n4. Validate results against quality gates\n5. Provide actionable next steps`
-        };
-
-        return plans[commandName] || plans['default'];
+    // Helper methods for routing and analysis
+    extractCommand(input) {
+        const match = input.match(/\/(sc:[a-zA-Z-]+)/);
+        return match ? match[1] : null;
     }
 
-    async executeUtilityTool(name, args) {
-        switch (name) {
-            case 'sc:persona':
-                return this.handlePersonaManagement(args);
-            case 'sc:mcp':
-                return this.handleMCPManagement(args);
-            case 'sc:optimize':
-                return this.handleOptimization(args);
-            default:
-                throw new Error(`Unknown utility tool: ${name}`);
-        }
+    extractFlags(input) {
+        const flags = input.match(/--[\w-]+/g) || [];
+        return flags;
     }
 
-    handlePersonaManagement(args) {
-        const { action, name, context } = args;
-
-        switch (action) {
-            case 'switch':
-                if (!this.config.personas.has(name)) {
-                    throw new Error(`Unknown persona: ${name}`);
-                }
-                this.state.activePersona = name;
-                const persona = this.config.personas.get(name);
-                return {
-                    content: [{
-                        type: 'text',
-                        text: `✨ **Persona Activated**: ${name}\n\n` +
-                            `🎭 **Identity**: ${persona.identity}\n` +
-                            `💭 **Core Belief**: ${persona.coreBeliefs[0]}\n` +
-                            `🎯 **Primary Question**: ${persona.primaryQuestion}\n` +
-                            `🧠 **Thinking Mode**: ${persona.thinkingMode}\n` +
-                            `🔗 **Preferred Tools**: ${persona.mcpPreferences.join(', ')}\n` +
-                            `⚡ **Specializes in**: ${persona.commandSpecialization.join(', ')}`
-                    }]
-                };
-
-            case 'query':
-                const current = this.state.activePersona ? this.config.personas.get(this.state.activePersona) : null;
-                return {
-                    content: [{
-                        type: 'text',
-                        text: current ? 
-                            `👤 **Current Persona**: ${this.state.activePersona}\n${current.identity}` :
-                            '❌ No active persona. Use "sc:persona switch [name]" to activate one.'
-                    }]
-                };
-
-            case 'list':
-                const list = Array.from(this.config.personas.entries())
-                    .map(([name, p]) => `• **${name}**: ${p.identity.split('|')[0].trim()}`)
-                    .join('\n');
-                return {
-                    content: [{
-                        type: 'text',
-                        text: `🎭 **Available Personas**:\n\n${list}`
-                    }]
-                };
-
-            case 'auto':
-                // Auto-select persona based on context
-                const detected = this.detectPersonaFromContext(context);
-                if (detected) {
-                    this.state.activePersona = detected;
-                    return {
-                        content: [{
-                            type: 'text',
-                            text: `🤖 **Auto-selected Persona**: ${detected}\n` +
-                                `Context analysis: "${context}"\n` +
-                                `Confidence: High`
-                        }]
-                    };
-                }
-                return {
-                    content: [{
-                        type: 'text',
-                        text: `🤷 Unable to auto-detect persona from context: "${context}"\n` +
-                            `Use 'sc:persona list' to see available options.`
-                    }]
-                };
-
-            default:
-                throw new Error(`Unknown persona action: ${action}`);
-        }
+    assessComplexity(input) {
+        if (input.includes('--ultrathink') || input.includes('--wave')) return 'advanced';
+        if (input.includes('--deep') || input.includes('--comprehensive')) return 'moderate';
+        return 'standard';
     }
 
-    detectPersonaFromContext(context) {
-        if (!context) return null;
-        
-        for (const [pattern, persona] of Object.entries(this.config.routingRules.personaRouting)) {
-            const regex = new RegExp(pattern, 'i');
-            if (regex.test(context)) {
-                return persona;
-            }
-        }
-        return null;
+    identifyDomain(input) {
+        if (/ui|component|frontend|react|vue/.test(input)) return 'frontend';
+        if (/api|backend|server|database/.test(input)) return 'backend';
+        if (/security|auth|vulnerability/.test(input)) return 'security';
+        if (/deploy|infrastructure|devops/.test(input)) return 'devops';
+        if (/test|quality|qa/.test(input)) return 'quality';
+        return 'general';
     }
 
-    handleMCPManagement(args) {
-        const { action, servers } = args;
-
-        switch (action) {
-            case 'status':
-                const statuses = Array.from(this.config.mcpServers.entries())
-                    .map(([name, config]) => `• **${config.name}**: ${config.status} | ${config.capabilities.join(', ')}`)
-                    .join('\n');
-                return {
-                    content: [{
-                        type: 'text',
-                        text: `🔗 **MCP Server Status**:\n\n${statuses}\n\n` +
-                            `Active integrations: ${Array.from(this.state.mcpIntegrations).join(', ') || 'None'}`
-                    }]
-                };
-
-            case 'enable':
-                servers.forEach(server => {
-                    if (this.config.mcpServers.has(server)) {
-                        this.state.mcpIntegrations.add(server);
-                    }
-                });
-                return {
-                    content: [{
-                        type: 'text',
-                        text: `✅ **Enabled MCP Servers**: ${servers.join(', ')}\n` +
-                            `These servers will be automatically used in relevant commands.`
-                    }]
-                };
-
-            case 'disable':
-                servers.forEach(server => {
-                    this.state.mcpIntegrations.delete(server);
-                });
-                return {
-                    content: [{
-                        type: 'text',
-                        text: `❌ **Disabled MCP Servers**: ${servers.join(', ')}`
-                    }]
-                };
-
-            default:
-                throw new Error(`Unknown MCP action: ${action}`);
-        }
+    identifyMCPNeeds(input) {
+        const needs = [];
+        if (/component|ui|design/.test(input)) needs.push('magic');
+        if (/complex|analyze|think/.test(input)) needs.push('sequential');
+        if (/framework|library|docs/.test(input)) needs.push('context7');
+        if (/test|browser|e2e/.test(input)) needs.push('playwright');
+        if (/edit|refactor|bulk/.test(input)) needs.push('morphllm');
+        if (/memory|session|persist/.test(input)) needs.push('serena');
+        return needs;
     }
 
-    handleOptimization(args) {
-        const { mode, context_aware } = args;
-        this.state.tokenMode = mode;
-
-        const modeDescriptions = {
-            normal: 'Standard verbosity with full explanations',
-            compressed: 'Moderate compression (~40% reduction) with symbol usage',
-            ultracompressed: 'Maximum compression (~70% reduction) with minimal output',
-            adaptive: 'Context-aware optimization based on complexity'
-        };
-
-        return {
-            content: [{
-                type: 'text',
-                text: `⚡ **Token Optimization**: ${mode}\n\n` +
-                    `📝 **Description**: ${modeDescriptions[mode]}\n` +
-                    `🧠 **Context Aware**: ${context_aware ? 'Enabled' : 'Disabled'}\n` +
-                    `🎯 **Active for**: All subsequent responses\n\n` +
-                    `**Optimization Features**:\n` +
-                    `• Symbol substitution (→, &, @, w/)\n` +
-                    `• Condensed formatting\n` +
-                    `• Essential information priority\n` +
-                    `• Persona-aware compression`
-            }]
-        };
+    matchesAgentTriggers(context, agent) {
+        if (!agent.autoTriggers) return false;
+        const input = context.command + ' ' + JSON.stringify(context);
+        return agent.autoTriggers.some(trigger => 
+            input.toLowerCase().includes(trigger.toLowerCase())
+        );
     }
 
     generateUsageExample(commandName, config) {
-        const examples = {
-            'sc:build': 'sc:build "React app with TypeScript" --framework react --tdd',
-            'sc:implement': 'sc:implement "user authentication system" --type feature --persona backend',
-            'sc:analyze': 'sc:analyze "performance bottlenecks" --performance --ultrathink',
-            'sc:workflow': 'sc:workflow "CI/CD pipeline" --stages build,test,deploy --parallel',
-            'sc:troubleshoot': 'sc:troubleshoot "database connection issues" --trace --logs',
-            'sc:improve': 'sc:improve "code quality issues" --refactor --validate',
-            'sc:test': 'sc:test "authentication flow" --e2e --coverage',
-            'sc:task': 'sc:task "implement user dashboard" --create --milestone v2.0',
-            'sc:spawn': 'sc:spawn "parallel code review" --role analyzer --context security',
-            'sc:explain': 'sc:explain "OAuth2 flow" --detailed --examples',
-            'sc:document': 'sc:document "API endpoints" --technical --api',
-            'sc:cleanup': 'sc:cleanup "legacy code" --unused --duplicates',
-            'sc:git': 'sc:git "feature branch workflow" --checkpoint --analyze',
-            'sc:estimate': 'sc:estimate "microservices migration" --detailed --risks',
-            'sc:design': 'sc:design "user management system" --patterns --architecture',
-            'sc:index': 'sc:index "available commands" --search build --examples',
-            'sc:load': 'sc:load "new project context" --persona architect --config standard'
-        };
-        return examples[commandName] || `${commandName} "[description]" [flags]`;
+        const flags = config.flags?.slice(0, 2).join(' ') || '';
+        return `/${commandName} [description] ${flags}`;
     }
 
-    async start() {
-        await this.initialize();
-
-        const transport = new StdioServerTransport();
-        await this.server.connect(transport);
-
-        console.error(`[SUCCESS] Gemini SuperClaude MCP Server v${SERVER_VERSION} is running`);
-        console.error('[INFO] Ready for intelligent command routing and persona management');
+    generateAgentCapabilities(agentConfig) {
+        return {
+            tools: agentConfig.tools,
+            mcpIntegration: agentConfig.mcpPreferences,
+            specialization: agentConfig.commandSpecialization,
+            thinkingMode: agentConfig.thinkingMode
+        };
     }
 }
 
-// Launch the Gemini SuperClaude server
-const server = new GeminiSuperClaudeMCPServer();
-server.start().catch((error) => {
-    console.error(`[FATAL] Server failed to start: ${error.message}`);
-    process.exit(1);
-});
+// Server startup
+async function main() {
+    const server = new GeminiSuperClaudeMCPServerV4();
+    const transport = new StdioServerTransport();
+    
+    await server.initialize();
+    await server.server.connect(transport);
+    
+    console.error('[INFO] Gemini SuperClaude MCP Server v2.0.0 ready for SuperClaude Framework v4.0.8');
+}
+
+main().catch(console.error);

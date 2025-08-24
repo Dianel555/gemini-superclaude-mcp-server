@@ -1,7 +1,7 @@
 {
   "name": "gemini-superclaude-mcp-server",
-  "version": "1.0.1",
-  "description": "Gemini MCP server for SuperClaude Framework v3+ - Intelligent command routing and persona management for Gemini CLI",
+  "version": "2.0.0",
+  "description": "Gemini MCP server for SuperClaude Framework v4.0.8 - Enhanced command routing with 21 commands, 14 agents, and 6 MCP integrations for Gemini CLI",
   "type": "module",
   "main": "superclaude-server.js",
   "bin": {
@@ -37,13 +37,19 @@
   },
   "config": {
     "superclaude": {
-      "framework_version": "v3+",
+      "framework_version": "v4.0.8",
       "core_features": [
-        "intelligent-routing",
-        "persona-management", 
-        "command-orchestration",
-        "mcp-integration"
-      ]
+        "enhanced-command-routing",
+        "14-agent-system",
+        "6-mcp-integrations",
+        "cross-session-persistence",
+        "behavioral-modes",
+        "intelligent-orchestration"
+      ],
+      "commands": 21,
+      "agents": 14,
+      "modes": 5,
+      "mcp_servers": 6
     }
   }
 }
