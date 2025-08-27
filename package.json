@@ -1,11 +1,11 @@
 {
   "name": "gemini-superclaude-mcp-server",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Gemini MCP server for SuperClaude Framework v4.0.8 - Enhanced command routing with 21 commands, 14 agents, and 6 MCP integrations for Gemini CLI",
   "type": "module",
   "main": "superclaude-server.js",
   "bin": {
-    "superclaude-mcp": "./superclaude-server.js"
+    "superclaude-mcp": "superclaude-server.js"
   },
   "scripts": {
     "start": "node superclaude-server.js",
@@ -33,7 +33,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Dianel555/gemini-superclaude-mcp-server"
+    "url": "git+https://github.com/Dianel555/gemini-superclaude-mcp-server.git"
   },
   "config": {
     "superclaude": {
