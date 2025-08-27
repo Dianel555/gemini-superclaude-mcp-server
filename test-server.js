@@ -91,11 +91,20 @@ class MCPServerTesterV4 {
         
         await this.executeTest('All 14 specialized agents defined', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
-            return serverContent.includes('system-architect:') &&
-                   serverContent.includes('frontend-architect:') &&
-                   serverContent.includes('backend-architect:') &&
-                   serverContent.includes('devops-architect:') &&
-                   serverContent.includes('security-engineer:');
+            return serverContent.includes("'system-architect': {") &&
+                   serverContent.includes("'frontend-architect': {") &&
+                   serverContent.includes("'backend-architect': {") &&
+                   serverContent.includes("'devops-architect': {") &&
+                   serverContent.includes("'security-engineer': {") &&
+                   serverContent.includes("'performance-engineer': {") &&
+                   serverContent.includes("'quality-engineer': {") &&
+                   serverContent.includes("'refactoring-expert': {") &&
+                   serverContent.includes("'root-cause-analyst': {") &&
+                   serverContent.includes("'requirements-analyst': {") &&
+                   serverContent.includes("'python-expert': {") &&
+                   serverContent.includes("'socratic-mentor': {") &&
+                   serverContent.includes("'learning-guide': {") &&
+                   serverContent.includes("'technical-writer': {");
         });
 
         await this.executeTest('Agents have behavioral patterns and tool definitions', async () => {
@@ -130,7 +139,7 @@ class MCPServerTesterV4 {
 
         await this.executeTest('MCP routing rules are defined and integrated', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
-            return serverContent.includes('routeMCP(context, agents)') &&
+            return serverContent.includes('routeMCP: (context, agents)') &&
                    serverContent.includes('cmd.mcpRequired.forEach(mcp => mcpServers.add(mcp))') &&
                    serverContent.includes('agent.mcpPreferences.forEach(mcp => mcpServers.add(mcp))');
         });

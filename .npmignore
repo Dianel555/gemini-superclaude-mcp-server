@@ -2,6 +2,7 @@
 
 # 开发和测试文件
 test-server.js
+superclaude-server-v3-backup.js
 validate-config.js
 *.test.js
 *.spec.js

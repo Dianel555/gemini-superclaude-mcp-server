@@ -671,14 +671,14 @@ class GeminiSuperClaudeMCPServerV4 {
                 
                 if (context.command) {
                     const cmd = this.config.commands.get(context.command);
-                    if (cmd?.mcpRequired) {
+                    if (cmd && cmd.mcpRequired) {
                         cmd.mcpRequired.forEach(mcp => mcpServers.add(mcp));
                     }
                 }
 
                 agents.forEach(agentName => {
                     const agent = this.config.agents.get(agentName);
-                    if (agent?.mcpPreferences) {
+                    if (agent && agent.mcpPreferences) {
                         agent.mcpPreferences.forEach(mcp => mcpServers.add(mcp));
                     }
                 });
