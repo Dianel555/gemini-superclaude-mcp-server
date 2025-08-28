@@ -1,3 +1,5 @@
+[![MSeeP.ai Security Assessment Badge](https://mseep.net/pr/dianel555-gemini-superclaude-mcp-server-badge.png)](https://mseep.ai/app/dianel555-gemini-superclaude-mcp-server)
+
 # Gemini SuperClaude MCP Server
 
 [![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/Dianel555/gemini-superclaude-mcp-server)
