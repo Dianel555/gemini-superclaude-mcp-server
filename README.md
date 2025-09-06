@@ -6,7 +6,7 @@
 [![Commands](https://img.shields.io/badge/commands-22-success.svg)](README.md#complete-command-set)
 [![Agents](https://img.shields.io/badge/agents-14-success.svg)](README.md#enhanced-agent-system)
 [![MCP Servers](https://img.shields.io/badge/mcp_servers-6-blue.svg)](README.md#real-mcp-integration)
-
+[![Verified on MseeP](https://mseep.ai/badge.svg)](https://mseep.ai/app/64aa9a41-c66e-4640-a381-830b4a27e745)
 ## English|[中文](gemini-superclaude.md)
 
 ## [GEMINI_CLI_COMMANDS](GEMINI_CLI_COMMANDS.md)
