@@ -33,6 +33,9 @@
 # 全局安装
 npm install -g gemini-superclaude-mcp-server
 
+# TOML命令配置 
+npm run install-commands # 在npm全局下载目录找到gemini-superclaude-mcp-server/，在该目录下运行命令（或者只通过npx配置可以直接复制toml文件到相应目录）
+
 # 配置Gemini CLI (~/.gemini/settings.json)
 {
   "mcpServers": {

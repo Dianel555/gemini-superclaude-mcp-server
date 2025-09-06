@@ -33,6 +33,9 @@ A **fully upgraded** MCP server providing SuperClaude Framework v4.0.9 compatibi
 # Install globally
 npm install -g gemini-superclaude-mcp-server
 
+# TOML Command Configuration
+npm run install-commands # Locate the gemini-superclaude-mcp-server/ directory in the global npm installation folder and run the command there (or, if configuring via npx only, you can directly copy the toml file to the corresponding directory)
+
 # Configure Gemini CLI (~/.gemini/settings.json)
 {
   "mcpServers": {

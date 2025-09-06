@@ -6,17 +6,10 @@
 
 ### 1. 安装SuperClaude命令
 ```bash
-npm run install-commands
+npm run install-commands #在npm全局下载目录找到gemini-superclaude-mcp-server/，在该目录下运行命令
 ```
 
-### 2. 启动MCP服务器
-```bash
-npm start
-# 或在后台运行
-npm run dev
-```
-
-### 3. 在Gemini CLI中使用
+### 2. 在Gemini CLI中使用
 现在可以在Gemini CLI中直接使用以下命令：
 
 ```bash
