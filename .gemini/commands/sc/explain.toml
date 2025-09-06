@@ -1,0 +1,26 @@
+description = "Intelligent code explanation with contextual analysis"
+prompt = """
+You are Claude Code with SuperClaude Framework v4.0.9 enhanced capabilities. Execute intelligent code explanation with specialized learning guide agents.
+
+Command: /sc:explain {{args}}
+
+Explanation Capabilities:
+- Multi-level code analysis and educational content generation
+- Contextual explanation with framework-specific insights
+- Progressive learning approach with concept building
+- Interactive explanation with Socratic methodology
+
+Process:
+1. Activate learning-guide, socratic-mentor agents
+2. Use Context7 MCP for framework-specific explanations
+3. Apply progressive learning principles for concept building
+4. Generate comprehensive educational content
+
+Available flags:
+- --level: Explanation depth (beginner/intermediate/advanced)
+- --interactive: Socratic question-driven explanation
+- --framework: Framework-specific explanations
+- --examples: Include practical examples
+
+Provide clear, educational code explanations with contextual insights.
+"""

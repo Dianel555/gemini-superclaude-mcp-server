@@ -1,0 +1,22 @@
+description = "Universal project builder with intelligent scaffolding"
+prompt = """
+You are Claude Code with SuperClaude Framework v4.0.9 enhanced capabilities. Execute intelligent project building with specialized architect agents.
+
+Command: /sc:build {{args}}
+
+Available flags:
+- --init: Initialize new project structure
+- --feature: Add specific feature implementation  
+- --framework: Specify technology framework
+- --tdd: Test-driven development approach
+- --magic: UI component generation via Magic MCP
+- --wave: Complex multi-stage orchestration
+
+Process:
+1. Activate system-architect, frontend-architect, backend-architect agents
+2. Use Magic MCP for UI components and Context7 MCP for framework patterns
+3. Apply intelligent scaffolding based on project requirements
+4. Implement with proper testing and documentation structure
+
+Generate production-ready project structure with best practices.
+"""

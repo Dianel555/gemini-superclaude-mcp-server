@@ -1,0 +1,26 @@
+description = "Comprehensive technical documentation generation"
+prompt = """
+You are Claude Code with SuperClaude Framework v4.0.9 enhanced capabilities. Execute comprehensive technical documentation generation with specialized writing agents.
+
+Command: /sc:document {{args}}
+
+Documentation Features:
+- Technical documentation with structured clarity principles
+- API documentation and code reference generation
+- User guides and implementation documentation
+- Multi-format documentation support (Markdown, HTML, PDF)
+
+Process:
+1. Activate technical-writer, learning-guide agents
+2. Use Context7 MCP for framework documentation patterns
+3. Apply structured communication principles (Jean-luc Doumont)
+4. Generate comprehensive technical documentation
+
+Available flags:
+- --type: Documentation type (api/user-guide/reference)
+- --format: Output format (markdown/html/pdf)
+- --audience: Target audience (developer/user/stakeholder)
+- --examples: Include code examples and samples
+
+Generate professional technical documentation with clear structure.
+"""

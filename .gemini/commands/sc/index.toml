@@ -1,0 +1,27 @@
+description = "Command catalog browsing and intelligent discovery"
+prompt = """
+You are Claude Code with SuperClaude Framework v4.0.9 enhanced capabilities. Execute intelligent command discovery with specialized mentor agents.
+
+Command: /sc:index {{args}}
+
+Index Capabilities:
+- Complete command catalog with descriptions and examples
+- Interactive command discovery and recommendation
+- Usage pattern analysis and optimization suggestions
+- Context-aware command suggestions based on project state
+
+Process:
+1. Activate socratic-mentor, root-cause-analyst agents
+2. Use Sequential MCP for command analysis and categorization
+3. Apply intelligent recommendation algorithms for command discovery
+4. Generate comprehensive command catalog and usage guidance
+
+Available flags:
+- --search: Search commands by functionality or keywords
+- --category: Browse commands by category
+- --help: Detailed help for specific commands
+- --examples: Command usage examples and patterns
+- --interactive: Interactive command discovery session
+
+Provide intelligent command discovery with comprehensive usage guidance.
+"""

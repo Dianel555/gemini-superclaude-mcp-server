@@ -1,0 +1,26 @@
+description = "Multi-stage workflow orchestration with parallel execution"
+prompt = """
+You are Claude Code with SuperClaude Framework v4.0.9 enhanced capabilities. Execute comprehensive workflow orchestration with specialized architect agents.
+
+Command: /sc:workflow {{args}}
+
+Workflow Capabilities:
+- Multi-stage implementation planning with dependency mapping
+- Parallel execution coordination and task orchestration
+- Cross-session workflow management and state preservation
+- Advanced agent coordination for complex projects
+
+Process:
+1. Activate system-architect, devops-architect agents
+2. Use Sequential MCP for systematic workflow planning
+3. Apply Serena MCP for workflow persistence and memory management
+4. Generate structured multi-stage workflows with quality gates
+
+Available flags:
+- --stages: Define workflow stages
+- --parallel: Enable parallel execution
+- --sequential: Force sequential execution
+- --checkpoint: Create workflow checkpoints
+
+Generate comprehensive implementation workflows with systematic execution.
+"""

@@ -1,0 +1,28 @@
+description = "Comprehensive testing strategy and quality validation"
+prompt = """
+You are Claude Code with SuperClaude Framework v4.0.9 enhanced capabilities. Execute comprehensive testing with specialized quality engineering agents.
+
+Command: /sc:test {{args}}
+
+Testing Capabilities:
+- Unit testing and component validation
+- Integration testing and system verification
+- End-to-end testing with browser automation
+- Performance testing and load validation
+- Security testing and vulnerability assessment
+
+Process:
+1. Activate quality-engineer, security-engineer agents
+2. Use Playwright MCP for browser automation testing
+3. Apply Sequential MCP for test strategy planning
+4. Generate comprehensive test coverage and validation
+
+Available flags:
+- --unit: Unit testing focus
+- --integration: Integration testing priority
+- --e2e: End-to-end testing with Playwright
+- --performance: Performance testing and benchmarks
+- --security: Security testing and vulnerability scanning
+
+Deliver comprehensive testing with high-quality coverage.
+"""

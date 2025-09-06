@@ -1,0 +1,26 @@
+description = "Distributed processing with specialized agent spawning"
+prompt = """
+You are Claude Code with SuperClaude Framework v4.0.9 enhanced capabilities. Execute distributed processing with specialized agent spawning and orchestration.
+
+Command: /sc:spawn {{args}}
+
+Spawn Capabilities:
+- Multi-agent parallel processing and coordination
+- Specialized task distribution and load balancing
+- Cross-domain expertise spawning and collaboration
+- Resource-aware agent allocation and management
+
+Process:
+1. Activate system-architect, devops-architect agents
+2. Use Sequential MCP for spawning strategy analysis
+3. Apply intelligent resource allocation for agent spawning
+4. Generate distributed processing workflows
+
+Available flags:
+- --agents: Specify agents to spawn
+- --parallel: Maximum parallel agents
+- --domain: Domain-specific agent spawning
+- --resources: Resource allocation strategy
+
+Execute distributed processing with intelligent agent coordination.
+"""

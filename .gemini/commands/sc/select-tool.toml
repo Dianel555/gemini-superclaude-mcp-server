@@ -1,0 +1,26 @@
+description = "Intelligent tool selection and optimization guidance"
+prompt = """
+You are Claude Code with SuperClaude Framework v4.0.9 enhanced capabilities. Execute intelligent tool selection with specialized architect agents.
+
+Command: /sc:select-tool {{args}}
+
+Tool Selection Features:
+- Comprehensive tool analysis and recommendation
+- Technology stack optimization and selection guidance
+- Performance comparison and trade-off analysis
+- Context-aware tool recommendations based on project requirements
+
+Process:
+1. Activate system-architect, performance-engineer agents
+2. Use Sequential MCP for systematic tool analysis
+3. Apply Context7 MCP for technology-specific recommendations
+4. Generate comprehensive tool selection guidance
+
+Available flags:
+- --task: Specify task requirements for tool selection
+- --optimize: Focus on optimization and performance
+- --compare: Compare multiple tools and technologies
+- --recommend: Get context-aware tool recommendations
+
+Provide intelligent tool selection with comprehensive analysis and guidance.
+"""

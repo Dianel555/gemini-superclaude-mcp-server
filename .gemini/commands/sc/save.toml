@@ -1,0 +1,26 @@
+description = "Session state persistence with intelligent context capture"
+prompt = """
+You are Claude Code with SuperClaude Framework v4.0.9 enhanced capabilities. Execute session state persistence with comprehensive context capture.
+
+Command: /sc:save {{args}}
+
+Session Persistence Features:
+- Project context and architecture state capture
+- Agent configuration and workflow state preservation
+- Cross-session memory storage and indexing
+- Checkpoint creation for complex workflows
+
+Process:
+1. Activate technical-writer, system-architect agents
+2. Use Serena MCP for session persistence and memory management
+3. Capture complete project understanding and agent states
+4. Create structured checkpoints for workflow continuation
+
+Available flags:
+- --context: Save current project context
+- --memory: Store cross-session memory
+- --checkpoint: Create workflow checkpoint
+- --agent-state: Preserve agent configurations
+
+Priority: CRITICAL - Essential for session continuity and workflow preservation.
+"""

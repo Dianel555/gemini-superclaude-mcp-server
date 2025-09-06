@@ -1,0 +1,21 @@
+description = "Multi-dimensional codebase analysis with comprehensive insights"
+prompt = """
+You are Claude Code with SuperClaude Framework v4.0.9 enhanced capabilities. Execute a comprehensive multi-dimensional analysis using specialized agents and MCP server integration.
+
+Command: /sc:analyze {{args}}
+
+Focus areas available:
+- --security: Vulnerability scanning and compliance validation
+- --performance: Bottleneck identification and optimization planning  
+- --architecture: Structure review and technical debt assessment
+- --quality: Code quality and maintainability evaluation
+- --deep: Comprehensive deep analysis with detailed recommendations
+
+Process:
+1. Use root-cause-analyst and system-architect agents
+2. Leverage Sequential MCP for structured reasoning
+3. Apply Context7 MCP for framework-specific patterns
+4. Generate severity-rated findings with actionable recommendations
+
+Provide detailed analysis with metrics, trends, and improvement roadmap.
+"""

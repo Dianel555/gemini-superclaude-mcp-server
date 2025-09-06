@@ -1,0 +1,26 @@
+description = "Evidence-based code improvement with systematic refactoring"
+prompt = """
+You are Claude Code with SuperClaude Framework v4.0.9 enhanced capabilities. Execute systematic code improvement with specialized refactoring agents.
+
+Command: /sc:improve {{args}}
+
+Improvement Focus Areas:
+- Code refactoring and modernization
+- Performance optimization and bottleneck elimination
+- Technical debt reduction and maintainability enhancement
+- Code quality improvement and best practices application
+
+Process:
+1. Activate refactoring-expert, performance-engineer, system-architect agents
+2. Use Sequential MCP for systematic analysis
+3. Apply Morphllm MCP for bulk code transformations
+4. Generate evidence-based improvement recommendations
+
+Available flags:
+- --refactor: Focus on code structure improvement
+- --optimize: Performance optimization priority
+- --modernize: Update to modern patterns and practices  
+- --validate: Comprehensive validation and testing
+
+Deliver systematic code improvements with measurable quality gains.
+"""

@@ -11,11 +11,11 @@ import path from 'path';
 import os from 'os';
 
 /**
- * Gemini SuperClaude MCP Server v2.0.0
- * SuperClaude Framework v4.0.8 Compatible
+ * Gemini SuperClaude MCP Server v2.0.2
+ * SuperClaude Framework v4.0.9 Compatible
  * 
  * Enhanced Features:
- * - 21 specialized slash commands with /sc: namespace
+ * - 22 specialized slash commands with /sc: namespace (including business-panel)
  * - 14 domain-expert agents with behavioral patterns
  * - 6 MCP server integrations with intelligent routing
  * - 5 behavioral modes for different workflows
@@ -24,8 +24,8 @@ import os from 'os';
  */
 
 const CLAUDE_CONFIG_DIR = process.env.CLAUDE_CONFIG_DIR || path.join(os.homedir(), '.claude');
-const SERVER_VERSION = '2.0.0';
-const FRAMEWORK_VERSION = '4.0.8';
+const SERVER_VERSION = '2.0.2';
+const FRAMEWORK_VERSION = '4.0.9';
 
 class GeminiSuperClaudeMCPServerV4 {
     constructor() {
@@ -74,7 +74,7 @@ class GeminiSuperClaudeMCPServerV4 {
             this.setupRequestHandlers();
             
             console.error('[INFO] Server initialization completed successfully');
-            console.error(`[INFO] Loaded: 21 Commands | 14 Agents | 5 Modes | 6 MCP Servers`);
+            console.error(`[INFO] Loaded: 22 Commands | 14 Agents | 5 Modes | 6 MCP Servers`);
         } catch (error) {
             console.error(`[ERROR] Initialization failed: ${error.message}`);
             throw error;
@@ -91,7 +91,7 @@ class GeminiSuperClaudeMCPServerV4 {
     }
 
     async loadV4Commands() {
-        // SuperClaude Framework v4.0.8 - All 21 commands with /sc: namespace
+        // SuperClaude Framework v4.0.9 - All 22 commands with /sc: namespace
         const commands = {
             // 🏗️ Core Development Commands
             'sc:build': {
@@ -169,6 +169,26 @@ class GeminiSuperClaudeMCPServerV4 {
                 mcpRequired: ['sequential', 'context7'],
                 complexity: 'moderate',
                 priority: 'CRITICAL'
+            },
+            'sc:business-panel': {
+                category: 'analysis',
+                description: 'Multi-expert business analysis with adaptive interaction modes',
+                flags: ['--experts', '--mode', '--focus', '--synthesis-only', '--structured', '--verbose'],
+                agents: ['system-architect', 'requirements-analyst', 'socratic-mentor'],
+                mcpRequired: ['sequential', 'context7'],
+                complexity: 'advanced',
+                priority: 'IMPORTANT',
+                businessExperts: [
+                    'christensen', 'porter', 'drucker', 'godin', 'kim_mauborgne', 
+                    'collins', 'taleb', 'meadows', 'doumont'
+                ],
+                analysisPhases: ['discussion', 'debate', 'socratic'],
+                autoFlags: {
+                    strategy: ['--focus strategy', '--experts porter,kim_mauborgne'],
+                    innovation: ['--focus innovation', '--experts christensen,drucker'],
+                    risk: ['--mode debate', '--experts taleb,meadows'],
+                    systems: ['--experts meadows,drucker', '--structured']
+                }
             },
 
             // ✅ Quality & Testing Commands

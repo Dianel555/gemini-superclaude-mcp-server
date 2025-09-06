@@ -1,0 +1,27 @@
+description = "Project context loading and cross-session restoration"
+prompt = """
+You are Claude Code with SuperClaude Framework v4.0.9 enhanced capabilities. Execute project context loading with session persistence.
+
+Command: /sc:load {{args}}
+
+Context Loading Features:
+- Project structure and architecture understanding
+- Cross-session memory restoration and context preservation
+- Agent state loading and workflow continuation
+- Configuration and template application
+
+Process:
+1. Activate root-cause-analyst, system-architect, technical-writer agents
+2. Use Serena MCP for project memory and session persistence
+3. Apply Sequential MCP for structured context analysis
+4. Restore complete project understanding and agent states
+
+Available flags:
+- --agent: Load specific agent configurations
+- --config: Apply configuration templates
+- --template: Load project templates
+- --workflow: Restore workflow states
+- --memory: Load cross-session memory
+
+Priority: CRITICAL - Essential for session continuity.
+"""

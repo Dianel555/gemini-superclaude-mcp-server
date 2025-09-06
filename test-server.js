@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 /**
- * Test Suite for Gemini SuperClaude MCP Server v2.0.0 (SuperClaude Framework v4.0.8 Compatible)
+ * Test Suite for Gemini SuperClaude MCP Server v2.0.2 (SuperClaude Framework v4.0.9 Compatible)
  * 
  * Comprehensive testing of MCP server functionality including:
- * - Command routing and execution for 21 /sc: commands
+ * - Command routing and execution for 22 /sc: commands (including business-panel)
  * - 14 specialized agent definitions and behavioral patterns
  * - 6 MCP server integrations and enhanced routing
  * - 5 behavioral modes and priority-based rules
@@ -22,7 +22,7 @@ class MCPServerTesterV4 {
     }
 
     async runTests() {
-        console.log('🧪 Gemini SuperClaude MCP Server v2.0.0 Test Suite (SuperClaude v4.0.8 Compatible)\n');
+        console.log('🧪 Gemini SuperClaude MCP Server v2.0.2 Test Suite (SuperClaude v4.0.9 Compatible)\n');
         
         await this.testV4CommandRouting();
         await this.testV4AgentSystem();
@@ -58,14 +58,15 @@ class MCPServerTesterV4 {
     }
 
     async testV4CommandRouting() {
-        console.log('🔄 Command Routing Tests (v4.0.8)');
+        console.log('🔄 Command Routing Tests (v4.0.9)');
         
-        await this.executeTest('All 21 SuperClaude commands have proper structure', async () => {
+        await this.executeTest('All 22 SuperClaude commands have proper structure', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
             return serverContent.includes('sc:build') && 
                    serverContent.includes('sc:implement') &&
                    serverContent.includes('sc:analyze') &&
                    serverContent.includes('sc:brainstorm') &&
+                   serverContent.includes('sc:business-panel') &&
                    serverContent.includes('sc:save');
         });
 
@@ -83,11 +84,20 @@ class MCPServerTesterV4 {
                    serverContent.includes('frontend-architect');
         });
 
+        await this.executeTest('Business panel command has expert definitions', async () => {
+            const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
+            return serverContent.includes('businessExperts: [') &&
+                   serverContent.includes('christensen') &&
+                   serverContent.includes('porter') &&
+                   serverContent.includes('drucker') &&
+                   serverContent.includes('analysisPhases: [');
+        });
+
         console.log();
     }
 
     async testV4AgentSystem() {
-        console.log('🎭 Agent System Tests (v4.0.8)');
+        console.log('🎭 Agent System Tests (v4.0.9)');
         
         await this.executeTest('All 14 specialized agents defined', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
@@ -125,7 +135,7 @@ class MCPServerTesterV4 {
     }
 
     async testV4MCPIntegration() {
-        console.log('🔗 MCP Integration Tests (v4.0.8)');
+        console.log('🔗 MCP Integration Tests (v4.0.9)');
         
         await this.executeTest('All 6 MCP servers configured', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
@@ -155,7 +165,7 @@ class MCPServerTesterV4 {
     }
 
     async testV4EnhancedRouting() {
-        console.log('🧠 Enhanced Routing Tests (v4.0.8)');
+        console.log('🧠 Enhanced Routing Tests (v4.0.9)');
         
         await this.executeTest('Enhanced routing engine is properly structured', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
@@ -182,7 +192,7 @@ class MCPServerTesterV4 {
     }
 
     async testV4BehavioralModes() {
-        console.log('⚡ Behavioral Modes & Rules Tests (v4.0.8)');
+        console.log('⚡ Behavioral Modes & Rules Tests (v4.0.9)');
         
         await this.executeTest('All 5 behavioral modes are defined', async () => {
             const serverContent = await fs.readFile('superclaude-server.js', 'utf8');
@@ -204,7 +214,7 @@ class MCPServerTesterV4 {
     }
 
     async testServerStartup() {
-        console.log('🚀 Server Startup Test (v4.0.8)');
+        console.log('🚀 Server Startup Test (v4.0.9)');
         
         await this.executeTest('Server initializes without errors', async () => {
             return new Promise((resolve) => {
@@ -242,7 +252,7 @@ class MCPServerTesterV4 {
         console.log(`📈 Success Rate: ${Math.round((this.passed / (this.passed + this.failed)) * 100)}%`);
         
         if (this.failed === 0) {
-            console.log('\n🎉 All tests passed! The server is ready for SuperClaude v4.0.8.');
+            console.log('\n🎉 All tests passed! The server is ready for SuperClaude v4.0.9.');
         } else {
             console.log('\n🚨 Some tests failed. Please review and fix the issues.');
         }

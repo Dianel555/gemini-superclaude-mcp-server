@@ -1,7 +1,7 @@
 {
   "name": "gemini-superclaude-mcp-server",
-  "version": "2.0.1",
-  "description": "Gemini MCP server for SuperClaude Framework v4.0.8 - Enhanced command routing with 21 commands, 14 agents, and 6 MCP integrations for Gemini CLI",
+  "version": "2.0.2",
+  "description": "Gemini MCP server for SuperClaude Framework v4.0.9 - Enhanced command routing with 22 commands (including business-panel), 14 agents, and 6 MCP integrations for Gemini CLI",
   "type": "module",
   "main": "superclaude-server.js",
   "bin": {
@@ -11,7 +11,9 @@
     "start": "node superclaude-server.js",
     "dev": "node --watch superclaude-server.js",
     "test": "node test-server.js",
-    "validate": "node validate-config.js"
+    "validate": "node validate-config.js",
+    "install-commands": "node install-commands.js",
+    "uninstall-commands": "node uninstall-commands.js"
   },
   "keywords": [
     "mcp",
@@ -37,7 +39,7 @@
   },
   "config": {
     "superclaude": {
-      "framework_version": "v4.0.8",
+      "framework_version": "v4.0.9",
       "core_features": [
         "enhanced-command-routing",
         "14-agent-system",
@@ -46,7 +48,7 @@
         "behavioral-modes",
         "intelligent-orchestration"
       ],
-      "commands": 21,
+      "commands": 22,
       "agents": 14,
       "modes": 5,
       "mcp_servers": 6

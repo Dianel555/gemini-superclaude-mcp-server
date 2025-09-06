@@ -1,22 +1,27 @@
 # Gemini SuperClaude MCP Server
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/Dianel555/gemini-superclaude-mcp-server)
+[![Version](https://img.shields.io/badge/version-2.0.2-blue.svg)](https://github.com/Dianel555/gemini-superclaude-mcp-server)
 [![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-green.svg)](https://nodejs.org/)
-[![SuperClaude](https://img.shields.io/badge/SuperClaude-v4.0.8-purple.svg)](https://github.com/SuperClaude-Org/SuperClaude_Framework)
-[![Commands](https://img.shields.io/badge/commands-21-success.svg)](README.md#complete-command-set)
+[![SuperClaude](https://img.shields.io/badge/SuperClaude-v4.0.9-purple.svg)](https://github.com/SuperClaude-Org/SuperClaude_Framework)
+[![Commands](https://img.shields.io/badge/commands-22-success.svg)](README.md#complete-command-set)
 [![Agents](https://img.shields.io/badge/agents-14-success.svg)](README.md#enhanced-agent-system)
 [![MCP Servers](https://img.shields.io/badge/mcp_servers-6-blue.svg)](README.md#real-mcp-integration)
 
-English|[中文](gemini-superclaude.md)
+## English|[中文](gemini-superclaude.md)
 
-A **fully upgraded** MCP server providing SuperClaude Framework v4.0.8 compatibility for Gemini CLI. Features enhanced command routing with **21 specialized `/sc:` commands**, **14 domain-expert agents**, and **6 integrated MCP servers**.
+## [GEMINI_CLI_COMMANDS](GEMINI_CLI_COMMANDS.md)
 
-## 🚀 What's New in v2.0.0 (SuperClaude v4.0.8 Upgrade)
+A **fully upgraded** MCP server providing SuperClaude Framework v4.0.9 compatibility for Gemini CLI. Features enhanced command routing with **22 specialized `/sc:` commands** (including new business-panel), **14 domain-expert agents**, and **6 integrated MCP servers** plus **full Gemini CLI integration** via TOML commands.
 
+## 🚀 What's New in v2.0.2 (SuperClaude v4.0.9 Upgrade)
+
+- **💼 NEW: Business Panel**: Multi-expert business analysis with 9 thought leaders (Christensen, Porter, Drucker, Godin, Kim & Mauborgne, Collins, Taleb, Meadows, Doumont)
+- **🎯 Gemini CLI Integration**: All 22 commands available as `/sc:command` in Gemini CLI via TOML configuration
+- **📦 Auto Installation**: `npm run install-commands` for seamless Gemini CLI integration
 - **🧠 Enhanced Routing**: Intelligent context analysis, agent selection, and MCP server coordination.
 - **🤖 14 Specialized Agents**: Replaces the old persona system with domain experts for architecture, security, performance, etc.
 - **🔗 6 MCP Servers**: Full integration with Sequential, Context7, Magic, Playwright, **Morphllm**, and **Serena**.
-- **📋 21 Specialized Commands**: All commands now use the `/sc:` namespace to prevent conflicts.
+- **📋 22 Specialized Commands**: All commands now use the `/sc:` namespace with business panel added.
 - **⚡ 5 Behavioral Modes**: Brainstorming, Introspection, Orchestration, Task Management, and Token Efficiency modes.
 - **💾 Cross-Session Persistence**: `sc:load` and `sc:save` commands powered by the Serena MCP for session memory.
 
@@ -104,51 +109,93 @@ npm test
 
 ## 📋 Complete Command Set
 
-**21 Core Commands** with `/sc:` namespace for SuperClaude Framework v4.0.8 compliance:
+**22 Core Commands** with `/sc:` namespace for SuperClaude Framework v4.0.9 compliance:
 
 ### Development & Orchestration
 - `sc:build`, `sc:implement`, `sc:workflow`, `sc:design`
 
-### Analysis & Discovery
-- `sc:analyze`, `sc:brainstorm`, `sc:troubleshoot`, `sc:estimate`
+### Analysis & Discovery  
+- `sc:analyze`, `sc:brainstorm`, `sc:troubleshoot`, `sc:business-panel`, `sc:estimate`
 
 ### Quality & Maintenance
 - `sc:improve`, `sc:test`, `sc:cleanup`, `sc:git`
 
-### Knowledge & Documentation
+### Documentation & Learning
 - `sc:explain`, `sc:document`
 
-### Operations & Session
+### Operations & Coordination
 - `sc:task`, `sc:spawn`, `sc:load`, `sc:save`, `sc:reflect`
 
 ### Meta & Discovery
 - `sc:index`, `sc:select-tool`
 
-## 📊 Architecture (v4.0.8)
+## 🎯 Gemini CLI Integration
+
+Install SuperClaude commands directly in Gemini CLI:
+
+```bash
+# Install all 22 commands as /sc: shortcuts
+npm run install-commands
+
+# Use in Gemini CLI
+/sc:analyze --security --deep
+/sc:business-panel strategy.md --experts porter,taleb --mode debate  
+/sc:build ecommerce --framework nextjs --magic
+
+# Uninstall if needed
+npm run uninstall-commands
+```
+
+### Business Panel (New in v4.0.9)
+
+Multi-expert business analysis with 9 thought leaders:
+- **Clayton Christensen**: Disruption Theory, Jobs-to-be-Done
+- **Michael Porter**: Competitive Strategy, Five Forces  
+- **Peter Drucker**: Management Philosophy, MBO
+- **Seth Godin**: Marketing Innovation, Tribe Building
+- **Kim & Mauborgne**: Blue Ocean Strategy
+- **Jim Collins**: Organizational Excellence
+- **Nassim Taleb**: Risk Management, Antifragility
+- **Donella Meadows**: Systems Thinking
+- **Jean-luc Doumont**: Communication Systems
+
+## 📊 Architecture (v4.0.9)
 
 ```
-┌────────────────────────────────────────——————————————————─┐
-│                      Gemini CLI                           │
-├────────────────────────────────────────——————————————————─┤
-│          Gemini SuperClaude MCP Server v2.0.0             │
-├────────────────────────────────────────——————————————————─┤
-│        ┌─────────────┐          ┌─────────────────┐       │
-│        │ Enhanced    │          │   14-Agent      │       │
-│        │ Routing     │          │   System        │       │
-│        └─────────────┘          └─────────────────┘       │
-├────────────────────────────────────────——————————————————─┤
-│           MCP Orchestration Layer (6 Servers)             │
-│┌─────────┐┌──────┐┌──────┐┌──────┐┌────┐┌────————┐│┌───———┐
-││Sequential││Context7││Magic││Playwright││Morphllm││Serena││
-│└─────────┘└──────┘└──────┘└──────┘└────┘└──————──┘│└───——─┘
-├───────────────────────────────────────——————————————————──┤
-│             SuperClaude Framework v4.0.8                  │
-└───────────────────────────────────────——————————————————──┘
+┌────────────────────────────────────────────────────────────┐
+│                        Gemini CLI                          │
+│          ┌─────────────────────────────────────┐           │
+│          │    22 /sc: Commands via TOML        │           │
+│          └─────────────────────────────────────┘           │
+├────────────────────────────────────────────────────────────┤
+│          Gemini SuperClaude MCP Server v2.0.2              │
+│   ┌─────────────┐  ┌─────────────────┐  ┌─────────────┐    │
+│   │ Enhanced    │  │   14-Agent      │  │ Business    │    │
+│   │ Routing     │  │   System        │  │ Panel (9)   │    │
+│   └─────────────┘  └─────────────────┘  └─────────────┘    │
+├────────────────────────────────────────────────────────────┤
+│           MCP Orchestration Layer (6 Servers)              │
+│ ┌─────────┐┌────────┐┌─────┐┌──────────┐┌────────┐┌──────┐ │
+│ │Sequentia││Context7││Magic││Playwright││Morphllm││Serena│ │
+│ └─────────┘└────────┘└─────┘└──────────┘└────────┘└──────┘ │
+├────────────────────────────────────────────────────────────┤
+│              SuperClaude Framework v4.0.9                  │
+└────────────────────────────────────────────────────────────┘
 ```
 
 ## 🤝 Contributing
 
 PRs are welcome! Please fork the repository, create a feature branch, and open a pull request.
+
+
+
+## 🙏 Acknowledgments
+
+- Thanks for [SuperClaude_Framework.](https://github.com/SuperClaude-Org/SuperClaude_Framework/tree/master)
+- Original [tinywind/superclaude-gemini-integration-mcp](https://github.com/tinywind/superclaude-gemini-integration-mcp) for the foundation
+- MCP community for the protocol standards
+
+
 
 ## 📄 License
 
