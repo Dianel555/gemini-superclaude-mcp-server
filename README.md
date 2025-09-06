@@ -205,3 +205,7 @@ PRs are welcome! Please fork the repository, create a feature branch, and open a
 ## 📄 License
 
 MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Dianel555/gemini-superclaude-mcp-server&type=Date)](https://www.star-history.com/#Dianel555/gemini-superclaude-mcp-server&Date)
